@@ -11,6 +11,7 @@ import {
 import { RedisSearchLanguages } from '../node_modules/@redis/search/dist/commands';
 import { GrantProgram } from './grant.type';
 import { log } from './logger';
+import { allRoute } from './routes/all';
 import { inserRoute } from './routes/insert';
 import { searchRoute } from './routes/search';
 import { tagListRoute } from './routes/taglist';
@@ -66,6 +67,10 @@ export const redis = createClient({
                 SORTABLE: 'UNF',
                 PHONETIC: SchemaTextFieldPhonetics.DM_EN,
             },
+            hit: {
+                type: SchemaFieldTypes.NUMERIC,
+                SORTABLE: true,
+            },
         } as Partial<Record<GrantKeys, SearchSchema>>,
         {
             LANGUAGE: RedisSearchLanguages.ENGLISH,
@@ -87,6 +92,7 @@ export const redis = createClient({
     });
 
     server.get('/search', searchRoute);
+    server.get('/all', allRoute);
     server.get('/tags', tagListRoute);
     server.post('/create', inserRoute);
 

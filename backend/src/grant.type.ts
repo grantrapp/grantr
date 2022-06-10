@@ -19,4 +19,5 @@ export type GrantProgram = {
     website: string;
     ecosystem: GrantEcosystem[];
     socials: Record<SocialType, string>;
+    hit: number; // private
 };

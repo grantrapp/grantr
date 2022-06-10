@@ -76,21 +76,14 @@ export const ListContainer: FC = () => {
     const { data, error } = useSWR(
         query.length === 0 ? '/api/all' : '/api/search/' + query,
         async () => {
-            if (query.length === 0) {
-                const request = await fetch('http://localhost:3000/all');
-
-                return (await request.json()) as {
-                    total: number;
-                    documents: { id: string; value: GrantProgram }[];
-                };
-            }
-
-            if (query.length < 3) {
+            if (query.length < 3 && query.length > 0) {
                 return;
             }
 
             const request = await fetch(
-                'http://localhost:3000/search?query=' + query
+                query.length === 0
+                    ? 'http://localhost:3000/all'
+                    : 'http://localhost:3000/search?query=' + query
             );
 
             return (await request.json()) as {
@@ -107,7 +100,7 @@ export const ListContainer: FC = () => {
                 type="text"
                 placeholder="Search..."
                 onChange={(event) => {
-                    setSearch(event.target.value);
+                    setSearch(event.target.value.trim());
                 }}
             />
             <div className="flex flex-col space-y-4">
@@ -117,7 +110,9 @@ export const ListContainer: FC = () => {
                         <GrantCard x={x.value} key={x.id} />
                     ))}
                 {(!data || data.total == 0) && (
-                    <p>No Grants matching your search</p>
+                    <p className="text-neutral-500 text-center p-4">
+                        No Grants matching your search
+                    </p>
                 )}
             </div>
         </div>
@@ -128,7 +123,7 @@ export const App = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-12 lg:col-span-4 p-4 flex flex-col items-center grow-0 mb-4">
+                <div className="col-span-12 lg:col-span-4 p-2 flex flex-col items-center grow-0">
                     <h1 className="text-4xl font-bold text-primary">
                         GRANTR
                         <span className="text-lg brightness-75">.app</span>
