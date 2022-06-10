@@ -70,7 +70,7 @@ export const App = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-4">
+                <div className="col-span-12 lg:col-span-4">
                     <div className="p-4 flex flex-col items-start bg-primary grow-0">
                         <h1 className="font-bold">Search</h1>
                         <h1 className="font-bold">Ecosystem</h1>
@@ -108,7 +108,7 @@ export const App = () => {
                         </button>
                     </div>
                 </div>
-                <div className="col-span-8 flex flex-col space-y-4">
+                <div className="col-span-12 lg:col-span-8 flex flex-col space-y-4">
                     <input
                         className="bg-dark text-white p-2 border-b-4 border-primary focus:outline-2"
                         type="text"
