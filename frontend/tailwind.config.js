@@ -8,7 +8,8 @@ module.exports = {
         sans: ["DINOT", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: "#EAA11B",
+        primary: "#FFCC00",
+        dark: "#1E1E1E",
       },
     },
   },
