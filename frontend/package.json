@@ -1,13 +1,17 @@
 {
   "dependencies": {
     "parcel": "^2.6.0",
+    "process": "^0.11.10",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "typescript": "^4.7.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.12",
-    "@types/react-dom": "^18.0.5"
+    "@types/react-dom": "^18.0.5",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.2"
   },
   "scripts": {
     "build": "parcel build src/index.html",
