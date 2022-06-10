@@ -10,7 +10,7 @@ services:
   #     - redis
   #     - logvolume01:/var/log
   redis:
-    image: redis
+    image: redislabs/redisearch:latest
     volumes:
       - ./data:/etc/redis/database
     ports:
