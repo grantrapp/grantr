@@ -15,7 +15,7 @@ const GrantCard: FC<{ x: any }> = ({ x }) => {
 
     return (
         <a
-            className="p-2 bg-primary hover:brightness-90 cursor-pointer text-gray-900 focus:outline-2"
+            className="p-2 bg-primary hover:brightness-110 cursor-pointer text-gray-900 focus:outline-2"
             href="#"
         >
             <div className="cursor-pointer mb-1">
