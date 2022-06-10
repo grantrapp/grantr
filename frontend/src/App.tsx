@@ -1,4 +1,8 @@
 import { FC, useState } from 'react';
+import useSWR from 'swr';
+import { useDebounce } from 'use-debounce';
+
+import { GrantProgram } from '../../backend/src/grant.type';
 
 const categories = ['DEVS', 'INFRASTRUCTURE'];
 
@@ -10,9 +14,7 @@ const RANDOM_GRANT = {
     amountMax: 1000,
 };
 
-const GrantCard: FC<{ x: any }> = ({ x }) => {
-    const [expanded, setExpanded] = useState(false);
-
+const GrantCard: FC<{ x: GrantProgram }> = ({ x }) => {
     return (
         <a
             className="p-2 bg-primary hover:brightness-90 cursor-pointer text-gray-900 focus:outline-2"
@@ -34,7 +36,9 @@ const GrantCard: FC<{ x: any }> = ({ x }) => {
                                 clipRule="evenodd"
                             />
                         </svg>
-                        <span className="text-xs ml-0.5">{x.org}</span>
+                        <span className="text-xs ml-0.5">
+                            {x.organization_id}
+                        </span>
                     </div>
                     <div className="flex flex-row items-center">
                         <svg
@@ -50,7 +54,7 @@ const GrantCard: FC<{ x: any }> = ({ x }) => {
                                 clipRule="evenodd"
                             />
                         </svg>
-                        <span className="text-xs ml-0.5">{`$${x.amountMin} - $${x.amountMax}`}</span>
+                        <span className="text-xs ml-0.5">{`$${x.min_amount} - $${x.max_amount}`}</span>
                     </div>{' '}
                 </div>
             </div>
@@ -66,62 +70,118 @@ const GrantCard: FC<{ x: any }> = ({ x }) => {
     );
 };
 
+export const ListContainer: FC = () => {
+    const [search, setSearch] = useState('');
+    const [query] = useDebounce(search.length >= 3 ? search : '', 250, {});
+    const { data, error } = useSWR(
+        query.length === 0 ? '/api/all' : '/api/search/' + query,
+        async () => {
+            if (query.length === 0) {
+                const request = await fetch('http://localhost:3000/all');
+
+                return (await request.json()) as {
+                    total: number;
+                    documents: { id: string; value: GrantProgram }[];
+                };
+            }
+
+            if (query.length < 3) {
+                return;
+            }
+
+            const request = await fetch(
+                'http://localhost:3000/search?query=' + query
+            );
+
+            return (await request.json()) as {
+                total: number;
+                documents: { id: string; value: GrantProgram }[];
+            };
+        }
+    );
+
+    return (
+        <div className="col-span-12 lg:col-span-8 flex flex-col space-y-4">
+            <input
+                className="bg-dark text-white p-2 border-b-4 border-primary focus:outline-2"
+                type="text"
+                placeholder="Search..."
+                onChange={(event) => {
+                    setSearch(event.target.value);
+                }}
+            />
+            <div className="flex flex-col space-y-4">
+                {data &&
+                    data.total > 0 &&
+                    data.documents.map((x) => (
+                        <GrantCard x={x.value} key={x.id} />
+                    ))}
+                {(!data || data.total == 0) && (
+                    <p>No Grants matching your search</p>
+                )}
+            </div>
+        </div>
+    );
+};
+
 export const App = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="grid grid-cols-12 gap-4">
+                <div className="col-span-12 lg:col-span-4 p-4 flex flex-col items-center grow-0 mb-4">
+                    <h1 className="text-4xl font-bold text-primary">
+                        GRANTR
+                        <span className="text-lg brightness-75">.app</span>
+                    </h1>
+                </div>
+                <div className="col-span-12 lg:col-span-8"></div>
                 <div className="col-span-12 lg:col-span-4">
-                    <div className="p-4 flex flex-col items-start bg-primary grow-0">
-                        <h1 className="font-bold">Search</h1>
-                        <h1 className="font-bold">Ecosystem</h1>
-                        <div className="flex flex-col space-y-0.5">
-                            {categories.map((category, index) => (
-                                <div className="flex flex-row items-center space-x-1">
-                                    <div
-                                        className={`w-3 h-3 border-4 border-dark ${
-                                            index % 2 ? 'bg-primary' : 'bg-dark'
-                                        }`}
-                                    ></div>
-                                    <span className="tracking-wider">
-                                        {category}
-                                    </span>
-                                </div>
-                            ))}
+                    <div className="bg-primary">
+                        <div className="p-4 border-b-primary border-b-2 brightness-90">
+                            <h1 className="font-bold">Search</h1>
                         </div>
-                        <h1 className="font-bold">For</h1>
-                        <div className="flex flex-col space-y-0.5">
-                            {categories.map((category, index) => (
-                                <div className="flex flex-row items-center space-x-1">
-                                    <div
-                                        className={`w-3 h-3 border-4 border-dark ${
-                                            index % 2 ? 'bg-primary' : 'bg-dark'
-                                        }`}
-                                    ></div>
-                                    <span className="tracking-wider">
-                                        {category}
-                                    </span>
-                                </div>
-                            ))}
+                        <div className="p-4 flex flex-col items-start bg-primary grow-0">
+                            <h1 className="font-bold">Ecosystem</h1>
+                            <div className="flex flex-col space-y-0.5">
+                                {categories.map((category, index) => (
+                                    <div className="flex flex-row items-center space-x-1">
+                                        <div
+                                            className={`w-3 h-3 border-4 border-dark ${
+                                                index % 2
+                                                    ? 'bg-primary'
+                                                    : 'bg-dark'
+                                            }`}
+                                        ></div>
+                                        <span className="tracking-wider">
+                                            {category}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                            <h1 className="font-bold">For</h1>
+                            <div className="flex flex-col space-y-0.5">
+                                {categories.map((category, index) => (
+                                    <div className="flex flex-row items-center space-x-1">
+                                        <div
+                                            className={`w-3 h-3 border-4 border-dark ${
+                                                index % 2
+                                                    ? 'bg-primary'
+                                                    : 'bg-dark'
+                                            }`}
+                                        ></div>
+                                        <span className="tracking-wider">
+                                            {category}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                            <button className="text-sm px-4 py-2 bg-dark text-white self-end mt-4 focus:outline-2">
+                                APPLY
+                            </button>
                         </div>
-                        <button className="text-sm px-4 py-2 bg-dark text-white self-end mt-4 focus:outline-2">
-                            APPLY
-                        </button>
                     </div>
                 </div>
-                <div className="col-span-12 lg:col-span-8 flex flex-col space-y-4">
-                    <input
-                        className="bg-dark text-white p-2 border-b-4 border-primary focus:outline-2"
-                        type="text"
-                        placeholder="Search..."
-                    />
-                    <div className="flex flex-col space-y-4">
-                        {Array.from({ length: 10 })
-                            .fill(RANDOM_GRANT)
-                            .map((x) => (
-                                <GrantCard x={x} />
-                            ))}
-                    </div>
-                </div>
+                <ListContainer />
             </div>
         </div>
     );

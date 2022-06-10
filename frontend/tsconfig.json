@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
         "target": "ES2022",
-        "lib": ["DOM"],
-        "jsx": "preserve"
+        "lib": ["es5", "es6", "dom", "dom.iterable"],
+        "jsx": "preserve",
+        "moduleResolution": "node"
     }
 }
