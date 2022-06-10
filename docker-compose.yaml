@@ -1,0 +1,17 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  # web:
+  #   build: .
+  #   ports:
+  #     - "8000:5000"
+  #   volumes:
+  #     - .:/code
+  #   links:
+  #     - redis
+  #     - logvolume01:/var/log
+  redis:
+    image: redis
+    volumes:
+      - ./data:/etc/redis/database
+volumes:
+  logvolume01: {}
