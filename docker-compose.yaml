@@ -1,14 +1,13 @@
 version: "3.9"  # optional since v1.27.0
 services:
-  # web:
-  #   build: .
-  #   ports:
-  #     - "8000:5000"
-  #   volumes:
-  #     - .:/code
-  #   links:
-  #     - redis
-  #     - logvolume01:/var/log
+  api:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_URI=redis://redis:6379
   redis:
     image: redislabs/redisearch:latest
     volumes:
@@ -17,9 +16,7 @@ services:
       - 6379:6379
   # Starts at the beginning to re-seed redis
   # (check if there are missing, and enter them)
-  init:
-    build:
-      context: temporary-data-ingest
-      dockerfile: Dockerfile
-volumes:
-  logvolume01: {}
+  # init:
+  #   build:
+  #     context: temporary-data-ingest
+  #     dockerfile: Dockerfile
