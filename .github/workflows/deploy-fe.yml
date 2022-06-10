@@ -3,7 +3,7 @@ name: Deploy to Signal
 on:
   push:
     paths:
-      - 'frontend/*'
+      - 'frontend/**'
       - '.github/workflows/*'
     branches:
       - "master"

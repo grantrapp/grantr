@@ -2,7 +2,7 @@ name: Build Docker Container
 on:
   push:
     paths:
-      - 'backend/*'
+      - 'backend/**'
       - '.github/workflows/*'
     branches:
       - master
