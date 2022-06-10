@@ -1,4 +1,5 @@
 import { config as setupENV } from 'dotenv';
+import Express from 'express';
 import {
     createClient,
     RediSearchSchema,
@@ -67,6 +68,30 @@ log.redis('Starting client');
     );
 
     log.debug('rofl');
+
+    log.express('Starting...');
+
+    const server = Express();
+
+    server.get('/', (_request, response) => {
+        response.send('Grantr Alpha v1.0');
+    });
+
+    server.get('/search', (request, response) => {
+        const data = request.query;
+
+        if (!data['query']) {
+            response.status(400).send('No Query');
+
+            return;
+        }
+
+        response.status(200).send('Here u data');
+    });
+
+    log.express('Listening to port 3000');
+
+    await new Promise<void>((accept) => server.listen(3000, accept));
 
     log.info('Ready to roll!');
 })();

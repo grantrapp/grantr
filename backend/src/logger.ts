@@ -10,6 +10,9 @@ export const log = createLogger(
         debug: {
             label: kleur.inverse(kleur.magenta(' DEBUG ')),
         },
+        express: {
+            label: kleur.yellow('HTTP'),
+        },
         error: 'ERROR',
     },
     {
