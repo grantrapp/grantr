@@ -1,3 +1,5 @@
 backend/data/
 node_modules
 .pnpm-debug.log
+.parcel-cache
+dist
