@@ -17,7 +17,7 @@ const GrantCard: React.FC<{ x: any }> = ({ x }) => {
         <div className="bg-primary">
             <div className="p-2 bg-primary text-gray-900">
                 <div
-                    className="flex flex-col cursor-pointer"
+                    className="flex flex-col cursor-pointer mb-1"
                     onClick={() => setExpanded(!expanded)}
                 >
                     <span className="font-bold">{x.name}</span>
@@ -55,6 +55,16 @@ const GrantCard: React.FC<{ x: any }> = ({ x }) => {
                         </div>{' '}
                     </div>
                 </div>
+                <div className="flex flex-row items-center space-x-1">
+                    <div className="bg-gray-900 text-white px-1 text-xs">
+                        DEVS
+                    </div>
+                    {/* opacity-50 when tags don't match filtered tag */}
+                    <div className="bg-gray-900 opacity-50 text-white px-1 text-xs">
+                        INFRASTRUCTURE
+                    </div>
+                    <span className="text-gray-900 font-bold text-xs">+ 5</span>
+                </div>
             </div>
             {expanded && (
                 <div className="p-2 flex flex-col">
@@ -81,26 +91,43 @@ export const App = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-4 flex flex-col items-start p-4 bg-primary">
-                    <h1 className="font-bold">Search</h1>
-                    <h1 className="font-bold">Filters</h1>
-                    <div className="flex flex-col space-y-0.5">
-                        {categories.map((category, i) => (
-                            <div className="flex flex-row items-center space-x-1">
-                                <div
-                                    className={`w-3 h-3 border-4 border-dark ${
-                                        i % 2 ? 'bg-primary' : 'bg-dark'
-                                    }`}
-                                ></div>
-                                <span className="tracking-wider">
-                                    {category}
-                                </span>
-                            </div>
-                        ))}
+                <div className="col-span-4">
+                    <div className="p-4 flex flex-col items-start bg-primary grow-0">
+                        <h1 className="font-bold">Search</h1>
+                        <h1 className="font-bold">Ecosystem</h1>
+                        <div className="flex flex-col space-y-0.5">
+                            {categories.map((category, i) => (
+                                <div className="flex flex-row items-center space-x-1">
+                                    <div
+                                        className={`w-3 h-3 border-4 border-dark ${
+                                            i % 2 ? 'bg-primary' : 'bg-dark'
+                                        }`}
+                                    ></div>
+                                    <span className="tracking-wider">
+                                        {category}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                        <h1 className="font-bold">For</h1>
+                        <div className="flex flex-col space-y-0.5">
+                            {categories.map((category, i) => (
+                                <div className="flex flex-row items-center space-x-1">
+                                    <div
+                                        className={`w-3 h-3 border-4 border-dark ${
+                                            i % 2 ? 'bg-primary' : 'bg-dark'
+                                        }`}
+                                    ></div>
+                                    <span className="tracking-wider">
+                                        {category}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                        <button className="text-sm px-4 py-2 bg-dark text-white outline-none self-end mt-4">
+                            APPLY
+                        </button>
                     </div>
-                    <button className="text-sm px-4 py-2 bg-dark text-white outline-none self-end">
-                        APPLY
-                    </button>
                 </div>
                 <div className="col-span-8 flex flex-col space-y-4">
                     <input
