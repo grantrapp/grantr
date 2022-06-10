@@ -33,6 +33,8 @@ export const redis = createClient({
 });
 
 (async () => {
+    log.debug(process.env.ADMIN_KEY);
+
     log.redis('Connecting...');
     await redis.connect();
 
