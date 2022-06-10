@@ -1,4 +1,4 @@
-backend/data/
+data
 node_modules
 .pnpm-debug.log
 .parcel-cache
