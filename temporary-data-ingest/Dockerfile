@@ -1,8 +1,8 @@
-FROM python:3.8
+FROM node:latest
+WORKDIR /srv/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-ADD ingest.py /
-ADD data.csv /
-
-RUN pip install pandas
-
-CMD [ "python", "./ingest.py" ]
+CMD ["node", "build/index.js"]
