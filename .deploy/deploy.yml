@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grantr
+  namespace: grantr
+  labels:
+    name: grantr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: grantr
+  template:
+    metadata:
+      labels:
+        run: grantr
+    spec:
+      containers:
+        - name: grantr
+          image: "lucemans/grantr:edge"
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 3000
+              name: "swarm"
+              protocol: "TCP"
+          env:
+            - name: REDIS_URI
+              value: redis://redis.grantr.svc.cluster.local:6379
+            - name: ENVIRONMENT
+              value: production
+          resources: {}
+      nodeName: v3x-poseidon
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grantr
+  namespace: grantr
+spec:
+  selector:
+    run: grantr
+  ports:
+  - port: 3000
+    targetPort: 3000

@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import useSWR from 'swr';
 import { useDebounce } from 'use-debounce';
+import { GLOBALS } from '.';
 
 import { GrantProgram } from '../../backend/src/grant.type';
 
@@ -73,7 +74,7 @@ const GrantCard: FC<{ x: GrantProgram }> = ({ x }) => {
 export const ListContainer: FC = () => {
     const [search, setSearch] = useState('');
     const [query] = useDebounce(search.length >= 3 ? search : '', 250, {});
-    const { data, error } = useSWR(
+    const { data, error: _error } = useSWR(
         query.length === 0 ? '/api/all' : '/api/search/' + query,
         async () => {
             if (query.length < 3 && query.length > 0) {
@@ -81,9 +82,8 @@ export const ListContainer: FC = () => {
             }
 
             const request = await fetch(
-                query.length === 0
-                    ? 'http://localhost:3000/all'
-                    : 'http://localhost:3000/search?query=' + query
+                GLOBALS.API_URL +
+                    (query.length === 0 ? '/all' : '/search?query=' + query)
             );
 
             return (await request.json()) as {

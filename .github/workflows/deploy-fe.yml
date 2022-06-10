@@ -23,6 +23,7 @@ jobs:
       - name: Build
         run: |
           cd frontend
+          NODE_ENV=production
           yarn build
       - uses: vimtor/action-zip@v1
         with:

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: grantr
+  labels:
+    name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: redis
+  template:
+    metadata:
+      labels:
+        run: redis
+    spec:
+      containers:
+        - name: redis
+          image: "redislabs/redisearch:latest"
+          ports:
+            - containerPort: 6379
+              name: "swarm"
+              protocol: "TCP"
+          resources: {}
+      nodeName: v3x-poseidon
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: grantr
+spec:
+  selector:
+    run: redis
+  ports:
+  - port: 6379
+    targetPort: 6379
