@@ -5,6 +5,7 @@ specifiers:
   '@types/dotenv': ^8.2.0
   '@types/node': ^17.0.41
   '@typescript-eslint/parser': ^5.27.1
+  chalk: ^5.0.1
   dotenv: ^16.0.1
   eslint: ^8.17.0
   eslint-plugin-lvksh: ^1.4.1
@@ -15,6 +16,7 @@ specifiers:
 dependencies:
   '@lvksh/logger': 1.6.3
   '@types/dotenv': 8.2.0
+  chalk: 5.0.1
   dotenv: 16.0.1
   redis: 4.1.0
 
@@ -451,6 +453,11 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
+
+  /chalk/5.0.1:
+    resolution: {integrity: sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+    dev: false
 
   /ci-info/3.3.1:
     resolution: {integrity: sha512-SXgeMX9VwDe7iFFaEWkA5AstuER9YKqy4EhHqr4DVqkwmD9rpVimkMKWHdjn30Ja45txyjhSn63lVX69eVCckg==}
