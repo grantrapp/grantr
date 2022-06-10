@@ -28,6 +28,12 @@ spec:
               value: redis://redis.grantr.svc.cluster.local:6379
             - name: ENVIRONMENT
               value: production
+            - name: ADMIN_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: grantr-admin
+                  key: ADMIN_KEY
+                  optional: false
           resources: {}
       nodeName: v3x-poseidon
 ---

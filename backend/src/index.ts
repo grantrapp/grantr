@@ -1,3 +1,4 @@
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import { config as setupENV } from 'dotenv';
 import Express from 'express';
@@ -12,9 +13,9 @@ import { RedisSearchLanguages } from '../node_modules/@redis/search/dist/command
 import { GrantProgram } from './grant.type';
 import { log } from './logger';
 import { allRoute } from './routes/all';
-import { inserRoute } from './routes/insert';
 import { searchRoute } from './routes/search';
 import { tagListRoute } from './routes/taglist';
+import { updateRoute } from './routes/update';
 
 type GrantKeys = keyof GrantProgram;
 type SearchSchema = RediSearchSchema[GrantKeys];
@@ -86,6 +87,7 @@ export const redis = createClient({
     const server = Express();
 
     server.use(cors());
+    server.use(bodyParser.json());
 
     server.get('/', (_request, response) => {
         response.send('Grantr Alpha v1.0');
@@ -94,7 +96,7 @@ export const redis = createClient({
     server.get('/search', searchRoute);
     server.get('/all', allRoute);
     server.get('/tags', tagListRoute);
-    server.post('/create', inserRoute);
+    server.post('/update', updateRoute);
 
     log.express('Listening to port 3000');
 

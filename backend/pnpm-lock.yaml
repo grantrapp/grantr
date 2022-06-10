@@ -7,6 +7,7 @@ specifiers:
   '@types/express': ^4.17.13
   '@types/node': ^17.0.41
   '@typescript-eslint/parser': ^5.27.1
+  body-parser: ^1.20.0
   cors: ^2.8.5
   dotenv: ^16.0.1
   eslint: ^8.17.0
@@ -23,6 +24,7 @@ dependencies:
   '@lvksh/logger': 1.6.3
   '@types/dotenv': 8.2.0
   '@types/express': 4.17.13
+  body-parser: 1.20.0
   cors: 2.8.5
   dotenv: 16.0.1
   express: 4.18.1
@@ -1691,7 +1693,7 @@ packages:
     dev: false
 
   /ms/2.0.0:
-    resolution: {integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=}
+    resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
     dev: false
 
   /ms/2.1.2:
