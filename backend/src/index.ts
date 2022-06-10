@@ -11,6 +11,7 @@ import { GrantProgram } from './grant.type';
 import { log } from './logger';
 import { inserRoute } from './routes/insert';
 import { searchRoute } from './routes/search';
+import { tagListRoute } from './routes/taglist';
 import { RedisSearchLanguages } from '.pnpm/@redis+search@1.0.6_@redis+client@1.1.0/node_modules/@redis/search/dist/commands';
 
 type GrantKeys = keyof GrantProgram;
@@ -83,6 +84,7 @@ export const redis = createClient({
     });
 
     server.get('/search', searchRoute);
+    server.get('/tags', tagListRoute);
     server.post('/create', inserRoute);
 
     log.express('Listening to port 3000');
