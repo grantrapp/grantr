@@ -1,3 +1,4 @@
+import cors from 'cors';
 import { config as setupENV } from 'dotenv';
 import Express from 'express';
 import {
@@ -7,12 +8,13 @@ import {
     SchemaTextFieldPhonetics,
 } from 'redis';
 
+import { RedisSearchLanguages } from '../node_modules/@redis/search/dist/commands';
 import { GrantProgram } from './grant.type';
 import { log } from './logger';
+import { allRoute } from './routes/all';
 import { inserRoute } from './routes/insert';
 import { searchRoute } from './routes/search';
 import { tagListRoute } from './routes/taglist';
-import { RedisSearchLanguages } from '.pnpm/@redis+search@1.0.6_@redis+client@1.1.0/node_modules/@redis/search/dist/commands';
 
 type GrantKeys = keyof GrantProgram;
 type SearchSchema = RediSearchSchema[GrantKeys];
@@ -65,6 +67,10 @@ export const redis = createClient({
                 SORTABLE: 'UNF',
                 PHONETIC: SchemaTextFieldPhonetics.DM_EN,
             },
+            hit: {
+                type: SchemaFieldTypes.NUMERIC,
+                SORTABLE: true,
+            },
         } as Partial<Record<GrantKeys, SearchSchema>>,
         {
             LANGUAGE: RedisSearchLanguages.ENGLISH,
@@ -79,11 +85,14 @@ export const redis = createClient({
 
     const server = Express();
 
+    server.use(cors());
+
     server.get('/', (_request, response) => {
         response.send('Grantr Alpha v1.0');
     });
 
     server.get('/search', searchRoute);
+    server.get('/all', allRoute);
     server.get('/tags', tagListRoute);
     server.post('/create', inserRoute);
 
