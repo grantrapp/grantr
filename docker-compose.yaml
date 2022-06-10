@@ -15,5 +15,11 @@ services:
       - ./data:/etc/redis/database
     ports:
       - 6379:6379
+  # Starts at the beginning to re-seed redis
+  # (check if there are missing, and enter them)
+  init:
+    build:
+      context: temporary-data-ingest
+      dockerfile: Dockerfile
 volumes:
   logvolume01: {}

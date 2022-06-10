@@ -1,4 +1,5 @@
 import { config as setupENV } from 'dotenv';
+import Express from 'express';
 import {
     createClient,
     RediSearchSchema,
@@ -7,37 +8,43 @@ import {
 } from 'redis';
 
 import { GrantProgram } from './grant.type';
-import { logger } from './logger';
+import { log } from './logger';
+import { inserRoute } from './routes/insert';
+import { searchRoute } from './routes/search';
+import { tagListRoute } from './routes/taglist';
 import { RedisSearchLanguages } from '.pnpm/@redis+search@1.0.6_@redis+client@1.1.0/node_modules/@redis/search/dist/commands';
 
 type GrantKeys = keyof GrantProgram;
 type SearchSchema = RediSearchSchema[GrantKeys];
-const IDX_GRANT = 'idx:grantz';
+export const Globals = {
+    IDX_GRANT: 'idx:grantz',
+    MAX_RESULTS: 10,
+};
 
-logger.info('Loading ENV');
+log.info('Loading ENV');
 setupENV();
 
-logger.redis('Starting client');
-(async () => {
-    const redis = createClient({
-        url: process.env.REDIS_URI || 'redis://localhost:6379',
-    });
+log.redis('Starting client');
+export const redis = createClient({
+    url: process.env.REDIS_URI || 'redis://localhost:6379',
+});
 
-    logger.redis('Connecting...');
+(async () => {
+    log.redis('Connecting...');
     await redis.connect();
 
-    logger.redis('Gathering search index info');
+    log.redis('Gathering search index info');
 
     try {
-        logger.redis('Dropping index');
-        redis.ft.DROPINDEX(IDX_GRANT);
+        log.redis('Dropping index');
+        redis.ft.DROPINDEX(Globals.IDX_GRANT);
     } catch {
-        logger.redis('No Index exists');
+        log.redis('No Index exists');
     }
 
-    logger.redis('Creating new Index');
+    log.redis('Creating new Index');
     redis.ft.CREATE(
-        IDX_GRANT,
+        Globals.IDX_GRANT,
         {
             id: {
                 type: SchemaFieldTypes.TEXT,
@@ -66,5 +73,23 @@ logger.redis('Starting client');
         }
     );
 
-    logger.info('Ready to roll!');
+    log.debug('rofl');
+
+    log.express('Starting...');
+
+    const server = Express();
+
+    server.get('/', (_request, response) => {
+        response.send('Grantr Alpha v1.0');
+    });
+
+    server.get('/search', searchRoute);
+    server.get('/tags', tagListRoute);
+    server.post('/create', inserRoute);
+
+    log.express('Listening to port 3000');
+
+    await new Promise<void>((accept) => server.listen(3000, accept));
+
+    log.info('Ready to roll!');
 })();
