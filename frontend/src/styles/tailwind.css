@@ -3,21 +3,21 @@
 
 @font-face {
   font-family: 'DINOT';
-  src: url('./fonts/DINOT.otf') format('otf');
+  src: url('./fonts/DINOT.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'DINOT';
-  src: url('./fonts/DINOT-Medium.otf') format('otf');
+  src: url('./fonts/DINOT-Medium.otf') format('opentype');
   font-weight: medium;
   font-style: medium;
 }
 
 @font-face {
   font-family: 'DINOT';
-  src: url('./fonts/DINOT-Bold.otf') format('otf');
+  src: url('./fonts/DINOT-Bold.otf') format('opentype');
   font-weight: bold;
   font-style: bold;
 }
