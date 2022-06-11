@@ -11,7 +11,7 @@ export const App = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/admin" element={<Admin />} />
-                    <Route path="/grant/:id" element={<Grant />} />
+                    <Route path="/grant/:slug/:id" element={<Grant />} />
                 </Routes>
             </div>
         </BrowserRouter>
