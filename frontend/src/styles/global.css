@@ -1,5 +1,5 @@
 html {
-  @apply bg-dark;
+  @apply bg-dark selection:bg-primary selection:text-gray-900;
 }
 
 .grant-description {
