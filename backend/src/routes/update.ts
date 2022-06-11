@@ -11,10 +11,10 @@ const GrantProgramValidate = yup.object({
     status: yup.string(),
     min_amount: yup.string(),
     max_amount: yup.string(),
-    tags: yup.array(),
+    tags: yup.string(),
     description: yup.string(),
     website: yup.string(),
-    ecosystem: yup.array(),
+    ecosystem: yup.string(),
     socials: yup.object(),
 });
 

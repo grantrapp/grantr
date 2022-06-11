@@ -9,6 +9,7 @@ export const log = createLogger(
         redis: kleur.red('REDIS'),
         debug: {
             label: kleur.inverse(kleur.magenta(' DEBUG ')),
+            tags: ['debug'],
         },
         express: {
             label: kleur.yellow('HTTP'),
@@ -18,5 +19,6 @@ export const log = createLogger(
     {
         divider: kleur.reset(' | '),
         postProcessors: [(text) => text.map((txt) => kleur.gray(txt))],
+        exclude: [process.env.ENVIRONMENT === 'production' ? 'debug' : ''],
     }
 );

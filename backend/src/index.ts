@@ -13,6 +13,7 @@ import { RedisSearchLanguages } from '../node_modules/@redis/search/dist/command
 import { GrantProgram } from './grant.type';
 import { log } from './logger';
 import { allRoute } from './routes/all';
+import { getRoute } from './routes/get';
 import { searchRoute } from './routes/search';
 import { tagListRoute } from './routes/taglist';
 import { updateRoute } from './routes/update';
@@ -99,6 +100,7 @@ export const redis = createClient({
     server.get('/all', allRoute);
     server.get('/tags', tagListRoute);
     server.post('/update', updateRoute);
+    server.get('/get', getRoute);
 
     log.express('Listening to port 3000');
 
