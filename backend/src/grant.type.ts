@@ -1,8 +1,5 @@
 type GrantStatus = 'ongoing';
 
-type GrantTagName = string;
-type GrantTag = string;
-
 type GrantEcosystem = 'ethereum' | 'solana' | 'polygon' | 'aave';
 
 type SocialType = 'discord' | 'twitter';
@@ -14,7 +11,7 @@ export type GrantProgram = {
     status: GrantStatus;
     min_amount: string;
     max_amount: string;
-    tags: GrantTagName[];
+    tags: string;
     description: string;
     website: string;
     ecosystem: GrantEcosystem[];

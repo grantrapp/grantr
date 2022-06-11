@@ -60,7 +60,7 @@ export const redis = createClient({
             name: {
                 type: SchemaFieldTypes.TEXT,
                 SORTABLE: true,
-                PHONETIC: SchemaTextFieldPhonetics.DM_EN,
+                WEIGHT: 10,
             },
             organization_id: {
                 type: SchemaFieldTypes.NUMERIC,
@@ -70,6 +70,11 @@ export const redis = createClient({
                 type: SchemaFieldTypes.TEXT,
                 SORTABLE: 'UNF',
                 PHONETIC: SchemaTextFieldPhonetics.DM_EN,
+            },
+            tags: {
+                type: SchemaFieldTypes.TAG,
+                SEPARATOR: ',',
+                SORTABLE: 'UNF',
             },
             hit: {
                 type: SchemaFieldTypes.NUMERIC,
