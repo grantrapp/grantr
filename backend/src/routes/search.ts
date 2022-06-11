@@ -24,6 +24,8 @@ export const searchRoute = async (request: Request, response: Response) => {
         return;
     } catch (error) {
         log.error('Redis Search', error as any);
+
+        return;
     }
 
     response.status(500).send();

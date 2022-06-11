@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grantr
+  namespace: grantr
+  labels:
+    name: grantr
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`api.grantr.app`)
+    priority: 10
+    services:
+    - kind: Service
+      name: grantr
+      namespace: grantr
+      port: 3000
