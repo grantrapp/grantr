@@ -1,25 +1,33 @@
 version: "3.9"  # optional since v1.27.0
 services:
-  # web:
-  #   build: .
-  #   ports:
-  #     - "8000:5000"
-  #   volumes:
-  #     - .:/code
-  #   links:
-  #     - redis
-  #     - logvolume01:/var/log
+  api:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    command: yarn dev
+    volumes:
+      - ./backend:/app
+    environment:
+      - REDIS_URI=redis://redis:6379
   redis:
     image: redislabs/redisearch:latest
     volumes:
       - ./data:/etc/redis/database
     ports:
       - 6379:6379
+  web:
+    image: node:alpine
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 1234:1234
+    working_dir: /app
+    command: yarn dev
   # Starts at the beginning to re-seed redis
   # (check if there are missing, and enter them)
-  init:
-    build:
-      context: temporary-data-ingest
-      dockerfile: Dockerfile
-volumes:
-  logvolume01: {}
+  # init:
+  #   build:
+  #     context: temporary-data-ingest
+  #     dockerfile: Dockerfile
