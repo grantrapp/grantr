@@ -13,7 +13,7 @@ export const ListContainer: FC<{ filters: FilterConfig }> = ({ filters }) => {
     const seeking = query.length > 2 || filters.tags.length > 0;
 
     const { data, error: _error } = useSWR(
-        seeking ? '/api/search/' + query : '/api/all',
+        seeking ? `/api/search/${query}/${filters.tags.join(',')}` : '/api/all',
         async () => {
             const request = await fetch(
                 GLOBALS.API_URL +
