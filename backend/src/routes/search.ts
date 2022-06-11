@@ -19,12 +19,9 @@ export const searchRoute = async (request: Request, response: Response) => {
             tags && typeof tags === 'string' && tags.split(',').length > 0;
 
         const steve = hasTags
-            ? `${query} ` +
-              tags
-                  .split(',')
-                  .map((tag) => `@tags:{ ${tag}* }`)
-                  .join(' ')
-            : query;
+            ? (query ? query + '* ' : '') +
+              `@tags:{${tags.split(',').join(' | ')}}`
+            : `${query}*`;
 
         log.debug(steve);
 
