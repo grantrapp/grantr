@@ -29,9 +29,9 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
     }, [x]);
 
     return (
-        <Link
+        <a
             className="p-2 bg-primary hover:brightness-90 cursor-pointer text-gray-900 focus:outline-2"
-            to={`/grant/${x.name.toLowerCase().replace(/\W/g, '-')}/${x.id}`}
+            href={`/grant/${x.name.toLowerCase().replace(/\W/g, '-')}/${x.id}`}
         >
             <div className="cursor-pointer mb-1">
                 <span className="font-bold">{x.name}</span>
@@ -75,17 +75,23 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
             </div>
             <div className="flex flex-row items-center space-x-1">
                 {tags &&
-                    tags.map((tag) => (
-                        <div
-                            className={`bg-gray-900 text-white px-1 text-xs ${
-                                !filters.tags.includes(tag) && 'opacity-50'
-                            }`}
-                        >
-                            {tag}
-                        </div>
-                    ))}
-                <span className="text-gray-900 font-bold text-xs">+ 5</span>
+                    tags
+                        .slice(0, 4)
+                        .map((tag) => (
+                            <div
+                                className={`bg-gray-900 text-white px-1 text-xs ${
+                                    !filters.tags.includes(tag) && 'opacity-50'
+                                }`}
+                            >
+                                {tag}
+                            </div>
+                        ))}
+                {tags && tags.length > 4 && (
+                    <span className="text-gray-900 font-bold text-xs">
+                        + {tags.length - 4}
+                    </span>
+                )}
             </div>
-        </Link>
+        </a>
     );
 };
