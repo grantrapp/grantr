@@ -9,13 +9,14 @@ html {
 .grant-description h1 {
   @apply text-xl mb-1;
 }
+
 .grant-description p {
-  @apply text-sm brightness-50 leading-loose mb-4;
+  @apply text-sm text-gray-400 leading-loose mb-4;
 }
 
 .grant-description ul {
   @apply list-disc list-inside;
 }
 .grant-description ul>li {
-  @apply brightness-50;
+  @apply text-gray-400;
 }

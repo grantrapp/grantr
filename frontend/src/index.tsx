@@ -8,4 +8,4 @@ export const GLOBALS = {
     API_URL: process.env.API_URL,
 };
 
-createRoot(document.querySelector('#root')).render(<App />);
+createRoot(document.querySelector('#root')).render(<Grant />);
