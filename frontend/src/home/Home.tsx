@@ -42,7 +42,7 @@ export const SearchContainer: FC<{
                         {Object.keys(categories).map((key) => (
                             <div
                                 key={key}
-                                className="flex flex-row items-center space-x-1"
+                                className="flex flex-row items-center space-x-1 select-none"
                                 onClick={() => {
                                     setSelected(key, !selected.includes(key));
                                 }}
@@ -53,7 +53,7 @@ export const SearchContainer: FC<{
                                             ? 'bg-primary'
                                             : 'bg-dark'
                                     }`}
-                                ></div>
+                                />
                                 <span className="tracking-wider">
                                     {categories[key]}
                                 </span>

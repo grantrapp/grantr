@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useEffect } from 'react';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import { GrantProgram } from '../../backend/src/grant.type';
 import { FilterConfig } from './home/Home';
@@ -27,14 +28,10 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
         return `${x.min_amount} USD - ${x.max_amount} USD`;
     }, [x]);
 
-    useEffect(() => {
-        console.log(tags);
-    }, [tags]);
-
     return (
-        <a
+        <Link
             className="p-2 bg-primary hover:brightness-90 cursor-pointer text-gray-900 focus:outline-2"
-            href="#"
+            to={`/grant/${x.name.toLowerCase().replace(/\W/g, '-')}/${x.id}`}
         >
             <div className="cursor-pointer mb-1">
                 <span className="font-bold">{x.name}</span>
@@ -89,6 +86,6 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
                     ))}
                 <span className="text-gray-900 font-bold text-xs">+ 5</span>
             </div>
-        </a>
+        </Link>
     );
 };
