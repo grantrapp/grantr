@@ -4,7 +4,19 @@ import { redis } from '..';
 import { GrantProgram } from '../grant.type';
 import { log } from '../logger';
 
-const FETCH_VALUES: (keyof GrantProgram)[] = ['name', 'id', 'ecosystem'];
+const FETCH_VALUES: Set<keyof GrantProgram> = new Set<keyof GrantProgram>([
+    'name',
+    'id',
+    'ecosystem',
+    'description',
+    'max_amount',
+    'min_amount',
+    'organization_id',
+    'socials',
+    'status',
+    'tags',
+    'website',
+]);
 
 export const getRoute = async (request: Request, response: Response) => {
     const data = request.query;
