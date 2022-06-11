@@ -10,16 +10,18 @@ import { FilterConfig } from './Home';
 export const ListContainer: FC<{ filters: FilterConfig }> = ({ filters }) => {
     const [search, setSearch] = useState('');
     const [query] = useDebounce(search.length >= 3 ? search : '', 250, {});
-    const { data, error: _error } = useSWR(
-        query.length === 0 ? '/api/all' : '/api/search/' + query,
-        async () => {
-            if (query.length < 3 && query.length > 0) {
-                return;
-            }
+    const seeking = query.length > 2 || filters.tags.length > 0;
 
+    const { data, error: _error } = useSWR(
+        seeking ? '/api/search/' + query : '/api/all',
+        async () => {
             const request = await fetch(
                 GLOBALS.API_URL +
-                    (query.length === 0 ? '/all' : '/search?query=' + query)
+                    (seeking
+                        ? `/search?query=${encodeURIComponent(
+                              query
+                          )}&tags=${encodeURIComponent(filters.tags.join(','))}`
+                        : '/all')
             );
 
             return (await request.json()) as {
