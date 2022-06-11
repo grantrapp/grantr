@@ -17,14 +17,14 @@ services:
       - ./data:/etc/redis/database
     ports:
       - 6379:6379
-  web:
-    image: node:alpine
-    volumes:
-      - ./frontend:/app
-    ports:
-      - 1234:1234
-    working_dir: /app
-    command: yarn dev
+  # web:
+  #   image: node:alpine
+  #   volumes:
+  #     - ./frontend:/app
+  #   ports:
+  #     - 1234:1234
+  #   working_dir: /app
+  #   command: yarn dev
   # Starts at the beginning to re-seed redis
   # (check if there are missing, and enter them)
   # init:

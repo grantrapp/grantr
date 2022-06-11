@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { useEffect } from 'react';
 import { FC } from 'react';
 
 import { GrantProgram } from '../../backend/src/grant.type';
@@ -5,7 +7,30 @@ import { FilterConfig } from './home/Home';
 
 export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
     x,
+    filters,
 }) => {
+    const tags = useMemo(() => {
+        if (!x.tags) return;
+
+        return (x.tags as unknown as string).split(',').sort((a, _) => {
+            return filters.tags.includes(a) ? -1 : 1;
+        });
+    }, [filters, x]);
+
+    const grantAmountRange = useMemo(() => {
+        if (x.max_amount && !x.min_amount) return `${x.max_amount} USD`;
+
+        if (x.min_amount && !x.max_amount) return `${x.min_amount}+ USD`;
+
+        if (!x.min_amount && !x.max_amount) return '';
+
+        return `${x.min_amount} USD - ${x.max_amount} USD`;
+    }, [x]);
+
+    useEffect(() => {
+        console.log(tags);
+    }, [tags]);
+
     return (
         <a
             className="p-2 bg-primary hover:brightness-90 cursor-pointer text-gray-900 focus:outline-2"
@@ -45,23 +70,23 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
                                 clipRule="evenodd"
                             />
                         </svg>
-                        <span className="text-xs ml-0.5">{`$${x.min_amount} - $${x.max_amount}`}</span>
+                        <span className="text-xs ml-0.5">
+                            {grantAmountRange}
+                        </span>
                     </div>{' '}
                 </div>
             </div>
             <div className="flex flex-row items-center space-x-1">
-                {x.tags &&
-                    (x.tags as any as string)
-                        .split(',')
-                        .map((tag) => (
-                            <div className="bg-gray-900 text-white px-1 text-xs">
-                                {tag}
-                            </div>
-                        ))}
-                {/* opacity-50 when tags don't match filtered tag */}
-                <div className="bg-gray-900 opacity-50 text-white px-1 text-xs">
-                    INFRASTRUCTURE
-                </div>
+                {tags &&
+                    tags.map((tag) => (
+                        <div
+                            className={`bg-gray-900 text-white px-1 text-xs ${
+                                !filters.tags.includes(tag) && 'opacity-50'
+                            }`}
+                        >
+                            {tag}
+                        </div>
+                    ))}
                 <span className="text-gray-900 font-bold text-xs">+ 5</span>
             </div>
         </a>
