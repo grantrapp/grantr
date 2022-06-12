@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Admin } from './admin/Admin';
-import { Grant } from './Grant';
+import { AdminPostEdit } from './admin/AdminPostEdit';
+import { Grant } from './grant/Grant';
 import { Home } from './home/Home';
 
 export const App = () => {
@@ -11,6 +12,7 @@ export const App = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/admin" element={<Admin />} />
+                    <Route path="/admin/:id/edit" element={<AdminPostEdit />} />
                     <Route path="/grant/:slug/:id" element={<Grant />} />
                 </Routes>
             </div>

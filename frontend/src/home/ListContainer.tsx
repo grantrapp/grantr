@@ -4,7 +4,7 @@ import { useDebounce } from 'use-debounce';
 
 import { GrantProgram } from '../../../backend/src/grant.type';
 import { GLOBALS } from '..';
-import { GrantCard } from '../GrantCard';
+import { GrantCard } from './GrantCard';
 import { FilterConfig } from './Home';
 
 export const ListContainer: FC<{ filters: FilterConfig }> = ({ filters }) => {

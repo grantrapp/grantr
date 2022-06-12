@@ -2,8 +2,8 @@ import ReactMarkdown from 'react-markdown';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 
-import { GrantProgram } from '../../backend/src/grant.type';
-import { GLOBALS } from '.';
+import { GrantProgram } from '../../../backend/src/grant.type';
+import { GLOBALS } from '..';
 
 export const Grant = () => {
     const navigate = useNavigate();
