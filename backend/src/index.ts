@@ -22,7 +22,7 @@ type GrantKeys = keyof GrantProgram;
 type SearchSchema = RediSearchSchema[GrantKeys];
 export const Globals = {
     IDX_GRANT: 'idx:grantz',
-    MAX_RESULTS: 10,
+    MAX_RESULTS: 1000,
 };
 
 log.info('Loading ENV');
