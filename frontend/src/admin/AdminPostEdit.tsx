@@ -19,6 +19,8 @@ export const AdminPostEditContainer: FC<{
             organization_id: 1,
             description: grant?.description,
             tags: grant?.tags || '',
+            min_amount: grant?.min_amount || '',
+            max_amount: grant?.max_amount || '',
         },
     });
 
@@ -58,7 +60,25 @@ export const AdminPostEditContainer: FC<{
                     type="text"
                     placeholder="Tags"
                     {...register('tags', { required: true })}
-                />{' '}
+                />
+            </div>
+            <div>
+                <div>Min Amount</div>
+                <input
+                    className="text-lg text-white bg-transparent w-full border p-2"
+                    type="number"
+                    placeholder="min_amount"
+                    {...register('min_amount', { required: false })}
+                />
+            </div>
+            <div>
+                <div>Max Amount</div>
+                <input
+                    className="text-lg text-white bg-transparent w-full border p-2"
+                    type="number"
+                    placeholder="max_amount"
+                    {...register('max_amount', { required: false })}
+                />
             </div>
             <div className="grant-description my-4">
                 <textarea
