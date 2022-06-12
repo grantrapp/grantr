@@ -52,5 +52,5 @@ export const updateRoute = async (request: Request, response: Response) => {
 
     log.debug({ doesExist });
 
-    response.status(500).send();
+    response.status(200).send();
 };
