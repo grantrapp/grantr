@@ -110,6 +110,9 @@ export const Grant = () => {
                                 </a>
                             </div>
                         )}
+                        <div className="p-4 flex justify-center items-center text-neutral-700">
+                            Powered by&nbsp;<a href="https://grantr.app" className="hover:underline hover:text-white">Grantr.app</a>
+                        </div>
                     </div>
                 )}
             </div>
