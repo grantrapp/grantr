@@ -74,7 +74,7 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
                         <span className="text-xs ml-0.5">
                             {grantAmountRange} {x.currency}
                         </span>
-                    </div>{' '}
+                    </div>
                 </div>
             </div>
             <div className="flex flex-row items-center space-x-1">
