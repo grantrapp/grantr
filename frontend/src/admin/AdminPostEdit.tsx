@@ -18,6 +18,7 @@ export const AdminPostEditContainer: FC<{
             name: grant?.name,
             organization_id: 1,
             description: grant?.description,
+            tags: grant?.tags || '',
         },
     });
 
@@ -50,6 +51,15 @@ export const AdminPostEditContainer: FC<{
             <h2 className="text-lg text-gray-400">
                 {grant?.organization_id || '-'}
             </h2>
+            <div>
+                <div>Tags</div>
+                <input
+                    className="text-lg text-white bg-transparent w-full border p-2"
+                    type="text"
+                    placeholder="Tags"
+                    {...register('tags', { required: true })}
+                />{' '}
+            </div>
             <div className="grant-description my-4">
                 <textarea
                     name="description"
