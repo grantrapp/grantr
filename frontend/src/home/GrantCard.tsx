@@ -18,13 +18,13 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
     }, [filters, x]);
 
     const grantAmountRange = useMemo(() => {
-        if (x.max_amount && !x.min_amount) return `${x.max_amount} USD`;
+        if (x.max_amount && !x.min_amount) return `${x.max_amount}`;
 
-        if (x.min_amount && !x.max_amount) return `${x.min_amount}+ USD`;
+        if (x.min_amount && !x.max_amount) return `${x.min_amount}+`;
 
         if (!x.min_amount && !x.max_amount) return '';
 
-        return `${x.min_amount} USD - ${x.max_amount} USD`;
+        return `${x.min_amount} - ${x.max_amount}`;
     }, [x]);
 
     return (
@@ -67,7 +67,7 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
                             />
                         </svg>
                         <span className="text-xs ml-0.5">
-                            {grantAmountRange}
+                            {grantAmountRange} {x.currency}
                         </span>
                     </div>{' '}
                 </div>

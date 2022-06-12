@@ -20,6 +20,7 @@ export const AdminPostEditContainer: FC<{
             tags: grant?.tags || '',
             min_amount: grant?.min_amount || '',
             max_amount: grant?.max_amount || '',
+            currency: grant?.currency || '',
         },
     });
 
@@ -78,6 +79,15 @@ export const AdminPostEditContainer: FC<{
                     type="number"
                     placeholder="max_amount"
                     {...register('max_amount', { required: false })}
+                />
+            </div>
+            <div>
+                <p className="mb-2">Currency</p>
+                <input
+                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                    type="text"
+                    placeholder="currency"
+                    {...register('currency', { required: false })}
                 />
             </div>
             <div>
