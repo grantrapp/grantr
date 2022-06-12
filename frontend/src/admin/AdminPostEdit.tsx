@@ -21,7 +21,10 @@ export const AdminPostEditContainer: FC<{
             min_amount: grant?.min_amount || '',
             max_amount: grant?.max_amount || '',
             currency: grant?.currency || '',
-        },
+            apply_url: grant?.apply_url || '',
+            image_url: grant?.image_url || '',
+            website: grant?.website || '',
+        } as Record<keyof GrantProgram, unknown>,
     });
 
     const description = watch('description');
@@ -88,6 +91,33 @@ export const AdminPostEditContainer: FC<{
                     type="text"
                     placeholder="currency"
                     {...register('currency', { required: false })}
+                />
+            </div>
+            <div>
+                <p className="mb-2">Website</p>
+                <input
+                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                    type="url"
+                    placeholder="website"
+                    {...register('website', { required: false })}
+                />
+            </div>
+            <div>
+                <p className="mb-2">Image URL</p>
+                <input
+                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                    type="url"
+                    placeholder="image_url"
+                    {...register('image_url', { required: false })}
+                />
+            </div>
+            <div>
+                <p className="mb-2">Apply URL</p>
+                <input
+                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                    type="url"
+                    placeholder="Apply URL"
+                    {...register('apply_url', { required: false })}
                 />
             </div>
             <div>
