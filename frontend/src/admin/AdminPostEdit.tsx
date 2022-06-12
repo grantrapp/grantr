@@ -11,7 +11,7 @@ import { GLOBALS } from '..';
 export const AdminPostEditContainer: FC<{
     grant: GrantProgram;
     isNew?: boolean;
-}> = ({ grant, isNew = false }) => {
+}> = ({ grant }) => {
     const { register, handleSubmit, watch } = useForm({
         defaultValues: {
             id: grant?.id ?? uuidv4(),
@@ -105,7 +105,7 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
                     </svg>
                     Back
                 </button>
-                <AdminPostEditContainer grant={grant} isNew />
+                <AdminPostEditContainer grant={grant} />
             </div>
         </div>
     );
