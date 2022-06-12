@@ -46,6 +46,12 @@ export const AdminPostEditContainer: FC<{
                 });
 
                 console.log(steve);
+
+                if (!steve.ok) {
+                    alert('Error');
+                } else {
+                    history.back();
+                }
             })}
         >
             <input
