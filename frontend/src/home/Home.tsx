@@ -19,7 +19,13 @@ export const SearchContainer: FC<{
         <div className="col-span-12 lg:col-span-4">
             <div className="bg-primary">
                 <div className="p-4 border-b-primary border-b-2 brightness-90">
-                    <h1 className="font-bold">Search</h1>
+                    <button
+                        onClick={() =>
+                            document.getElementById('search')?.focus()
+                        }
+                    >
+                        <h1 className="font-bold">Search</h1>
+                    </button>
                 </div>
                 <div className="p-4 flex flex-col items-start bg-primary grow-0">
                     {/*                         <h1 className="font-bold">Ecosystem</h1>

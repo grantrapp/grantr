@@ -34,6 +34,7 @@ export const ListContainer: FC<{ filters: FilterConfig }> = ({ filters }) => {
     return (
         <div className="col-span-12 lg:col-span-8 flex flex-col space-y-4">
             <input
+                id="search"
                 className="bg-dark text-white p-2 border-b-4 border-primary focus:outline-2"
                 type="text"
                 placeholder="Search..."

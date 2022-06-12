@@ -3,17 +3,13 @@
     "parserOptions": {
         "ecmaVersion": 2021
     },
-    "extends": [
-        "plugin:lvksh/recommended"
-    ],
-    "ignorePatterns": [
-        "!**/*"
-    ],
-    "plugins": [
-        "lvksh"
-    ],
+    "extends": ["plugin:lvksh/recommended"],
+    "ignorePatterns": ["!**/*"],
+    "plugins": ["lvksh"],
     "env": {
         "browser": true
     },
-    "rules": {}
+    "rules": {
+        "unicorn/prefer-query-selector": false
+    }
 }
