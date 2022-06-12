@@ -12,6 +12,10 @@ export const App = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/admin" element={<Admin />} />
+                    <Route
+                        path="/admin/new"
+                        element={<AdminPostEdit isNew />}
+                    />
                     <Route path="/admin/:id/edit" element={<AdminPostEdit />} />
                     <Route path="/grant/:slug/:id" element={<Grant />} />
                 </Routes>

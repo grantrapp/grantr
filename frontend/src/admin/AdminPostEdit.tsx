@@ -1,20 +1,23 @@
+import useSWR from 'swr';
 import { FC } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import { useNavigate, useParams } from 'react-router-dom';
-import useSWR from 'swr';
 
 import { GrantProgram } from '../../../backend/src/grant.type';
 import { GLOBALS } from '..';
 
-export const AdminPostEditContainer: FC<{ grant: GrantProgram }> = ({
-    grant,
-}) => {
+export const AdminPostEditContainer: FC<{
+    grant: GrantProgram;
+    isNew?: boolean;
+}> = ({ grant, isNew = false }) => {
     const { register, handleSubmit, watch } = useForm({
         defaultValues: {
-            name: grant.name,
+            id: grant?.id ?? uuidv4(),
+            name: grant?.name,
             organization_id: 1,
-            description: grant.description,
+            description: grant?.description,
         },
     });
 
@@ -63,11 +66,11 @@ export const AdminPostEditContainer: FC<{ grant: GrantProgram }> = ({
     );
 };
 
-export const AdminPostEdit = () => {
-    const navigate = useNavigate();
+export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { data: grant, error } = useSWR(
-        '/api/get',
+        () => !isNew && '/api/get',
         async () => {
             const request = await fetch(GLOBALS.API_URL + '/get?query=' + id);
 
@@ -97,7 +100,7 @@ export const AdminPostEdit = () => {
                     </svg>
                     Back
                 </button>
-                {grant && <AdminPostEditContainer grant={grant} />}
+                {grant && <AdminPostEditContainer grant={grant} isNew />}
             </div>
         </div>
     );

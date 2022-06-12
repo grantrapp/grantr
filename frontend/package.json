@@ -10,7 +10,8 @@
         "react-router": "^6.3.0",
         "react-router-dom": "^6.3.0",
         "swr": "^1.3.0",
-        "use-debounce": "^8.0.1"
+        "use-debounce": "^8.0.1",
+        "uuid": "^8.3.2"
     },
     "devDependencies": {
         "@types/node": "^17.0.41",
