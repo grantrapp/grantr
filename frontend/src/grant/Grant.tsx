@@ -41,7 +41,17 @@ export const Grant = () => {
                 </button>
                 {grant && (
                     <div>
-                        <h1 className="text-2xl text-white">{grant.name}</h1>
+                        <div className="flex gap-4">
+                            {grant.image_url && (
+                                <img
+                                    src={grant.image_url}
+                                    className="h-8 w-8 rounded"
+                                />
+                            )}
+                            <h1 className="text-2xl text-white">
+                                {grant.name}
+                            </h1>
+                        </div>
                         <h2 className="text-lg text-gray-400">
                             {/* {grant.organization_id || '-'} */}
                         </h2>

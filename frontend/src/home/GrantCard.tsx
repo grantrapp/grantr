@@ -33,7 +33,12 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
             to={`/grant/${x.name.toLowerCase().replace(/\W/g, '-')}/${x.id}`}
         >
             <div className="cursor-pointer mb-1">
-                <span className="font-bold">{x.name}</span>
+                <div className="flex gap-2">
+                    {x.image_url && (
+                        <img src={x.image_url} className="h-8 w-8 rounded" />
+                    )}
+                    <span className="font-bold">{x.name}</span>
+                </div>
                 <div className="flex flex-row items-center space-x-2">
                     <div className="flex flex-row items-center">
                         <svg
