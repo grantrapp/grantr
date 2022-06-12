@@ -48,7 +48,7 @@ export const AdminPostEditContainer: FC<{
                 {...register('name', { required: true })}
             />
             <h2 className="text-lg text-gray-400">
-                {grant.organization_id || '-'}
+                {grant?.organization_id || '-'}
             </h2>
             <div className="grant-description my-4">
                 <textarea
@@ -105,7 +105,7 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
                     </svg>
                     Back
                 </button>
-                {grant && <AdminPostEditContainer grant={grant} isNew />}
+                <AdminPostEditContainer grant={grant} isNew />
             </div>
         </div>
     );
