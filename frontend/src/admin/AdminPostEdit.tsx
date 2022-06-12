@@ -28,9 +28,14 @@ export const AdminPostEditContainer: FC<{
             onSubmit={handleSubmit(async (data) => {
                 console.log('success', data);
                 // Inser fetch here
-                const steve = await fetch(GLOBALS.API_URL, {
+                const steve = await fetch(GLOBALS.API_URL + '/update', {
                     method: 'POST',
                     body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization:
+                            'Bearer thissecretisverysecretandyouarereadingthis',
+                    },
                 });
 
                 console.log(steve);
