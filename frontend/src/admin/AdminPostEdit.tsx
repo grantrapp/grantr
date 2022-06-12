@@ -27,6 +27,7 @@ export const AdminPostEditContainer: FC<{
 
     return (
         <form
+            className="text-white"
             onSubmit={handleSubmit(async (data) => {
                 console.log('success', data);
                 // Inser fetch here
@@ -53,44 +54,47 @@ export const AdminPostEditContainer: FC<{
                 {grant?.organization_id || '-'}
             </h2>
             <div>
-                <div>Tags</div>
+                <p className="mb-2">Tags</p>
                 <input
-                    className="text-lg text-white bg-transparent w-full border p-2"
+                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
                     type="text"
                     placeholder="Tags"
                     {...register('tags', { required: true })}
                 />
             </div>
             <div>
-                <div>Min Amount</div>
+                <p className="mb-2">Min Amount</p>
                 <input
-                    className="text-lg text-white bg-transparent w-full border p-2"
+                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
                     type="number"
                     placeholder="min_amount"
                     {...register('min_amount', { required: false })}
                 />
             </div>
             <div>
-                <div>Max Amount</div>
+                <p className="mb-2">Max Amount</p>
                 <input
-                    className="text-lg text-white bg-transparent w-full border p-2"
+                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
                     type="number"
                     placeholder="max_amount"
                     {...register('max_amount', { required: false })}
                 />
             </div>
-            <div className="grant-description my-4">
+            <div>
+                <p className="mb-2">Description</p>
                 <textarea
                     name="description"
                     id="description"
                     className="w-full h-fit bg-transparent border p-4"
                     {...register('description', { required: true })}
                 />
+            </div>
+            <div className="grant-description my-4">
                 <ReactMarkdown children={description} />
             </div>
             <div className="flex">
                 <button
-                    className="flex flex-row items-center justify-center w-full py-2 rounded-full shadow-lg bg-primary font-bold hover:brightness-90 active:translate-y-1"
+                    className="flex flex-row items-center justify-center w-full py-2 rounded-full shadow-lg bg-primary text-black font-bold hover:brightness-90 active:translate-y-1"
                     type="submit"
                 >
                     SAVE
