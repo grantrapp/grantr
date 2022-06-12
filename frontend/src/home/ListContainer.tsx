@@ -50,7 +50,7 @@ export const ListContainer: FC<{ filters: FilterConfig }> = ({ filters }) => {
                     ))}
                 {(!data || data.total == 0) && (
                     <p className="text-neutral-500 text-center p-4">
-                        No Grants matching your search
+                        No grants matching your search
                     </p>
                 )}
             </div>
