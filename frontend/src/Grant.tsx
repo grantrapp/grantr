@@ -1,29 +1,22 @@
-import { compile } from '@mdx-js/mdx';
-import { useEffect, useMemo } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import useSWR from 'swr';
-import { GLOBALS } from '.';
 import ReactMarkdown from 'react-markdown';
+import { useNavigate, useParams } from 'react-router-dom';
+import useSWR from 'swr';
+
+import { GrantProgram } from '../../backend/src/grant.type';
+import { GLOBALS } from '.';
 
 export const Grant = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-
     const { data: grant, error } = useSWR(
         '/api/get',
         async () => {
             const request = await fetch(GLOBALS.API_URL + '/get?query=' + id);
 
-            return (await request.json()) as Record<string, string>;
+            return (await request.json()) as GrantProgram;
         },
         { revalidateOnFocus: true }
     );
-
-    const compiledDescription = useMemo(() => {
-        if (grant && grant.description) {
-            return compile(grant.description);
-        }
-    }, [grant]);
 
     return (
         <div>
@@ -53,7 +46,7 @@ export const Grant = () => {
                             {grant.organization_id || '-'}
                         </h2>
                         <div className="grant-description my-4">
-                            <ReactMarkdown>{compiledDescription}</ReactMarkdown>
+                            <ReactMarkdown children={grant.description} />
                         </div>
                         <div className="flex">
                             <a
