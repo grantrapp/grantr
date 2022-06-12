@@ -21,27 +21,30 @@ export const Grant = () => {
     return (
         <div>
             <div className="max-w-2xl mx-auto px-4">
-                <button
-                    onClick={() => navigate(-1)}
-                    className="text-primary flex flex-row items-center mb-4"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 mr-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                <div className="col-span-12 lg:col-span-4 p-2 flex flex-col items-center grow-0 mb-4"></div>
+                <div className="flex flex-row items-center justify-between mb-4">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="text-primary flex flex-row items-center"
                     >
-                        <path
-                            fillRule="evenodd"
-                            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
-                    Back
-                </button>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 mr-1"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                        Back
+                    </button>
+                </div>
                 {grant && (
                     <div>
-                        <div className="p-4 border">
+                        <div className="py-4">
                             <div className="flex gap-4">
                                 {grant.image_url && (
                                     <img
@@ -49,7 +52,7 @@ export const Grant = () => {
                                         className="h-16 w-16 rounded"
                                     />
                                 )}
-                                <div className="flex flex-col justify-center flex-grow">
+                                <div className="flex flex-col justify-center grow shrink">
                                     <h1 className="text-2xl text-white">
                                         {grant.name}
                                     </h1>
@@ -58,29 +61,37 @@ export const Grant = () => {
                                             <a
                                                 href={grant.website}
                                                 target="_blank"
+                                                className="truncate"
                                             >
-                                                {grant.website}
+                                                {grant.website.length > 48
+                                                    ? grant.website.slice(
+                                                          0,
+                                                          48
+                                                      ) + '...'
+                                                    : grant.website}
                                             </a>
                                         </div>
                                     )}
                                 </div>
                                 <div>
-                                    <a
-                                        target="_blank"
-                                        href={grant.apply_url}
-                                        className="flex flex-row items-center justify-center w-full py-2 px-4 rounded-md shadow-lg bg-primary font-bold text-xs hover:brightness-90"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-5 w-5 mr-1"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
+                                    {grant.apply_url && (
+                                        <a
+                                            target="_blank"
+                                            href={grant.apply_url}
+                                            className="flex flex-row items-center justify-center w-full py-2 px-4 rounded-md shadow-lg bg-primary font-bold text-xs hover:brightness-90"
                                         >
-                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                                        </svg>
-                                        APPLY
-                                    </a>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-5 w-5 mr-1"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                                                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                                            </svg>
+                                            APPLY
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                             <h2 className="text-lg text-gray-400">
@@ -111,7 +122,20 @@ export const Grant = () => {
                             </div>
                         )}
                         <div className="p-4 flex justify-center items-center text-neutral-700">
-                            Powered by&nbsp;<a href="https://grantr.app" className="hover:underline hover:text-white">Grantr.app</a>
+                            Powered by&nbsp;
+                            <a
+                                href="https://grantr.app"
+                                className="hover:underline hover:text-white"
+                            >
+                                <div className="flex flex-row w-full justify-center items-center">
+                                    <h1 className="text-sm font-bold text-primary ">
+                                        GRANTR
+                                        <span className="text-xs brightness-75">
+                                            .app
+                                        </span>
+                                    </h1>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 )}

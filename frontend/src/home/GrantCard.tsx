@@ -32,8 +32,8 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
             className="p-2 bg-primary hover:brightness-90 cursor-pointer text-gray-900 focus:outline-2"
             to={`/grant/${x.name.toLowerCase().replace(/\W/g, '-')}/${x.id}`}
         >
-            <div className="cursor-pointer mb-1">
-                <div className="flex gap-2">
+            <div className="cursor-pointer mb-2">
+                <div className="flex gap-2 mb-2">
                     {x.image_url && (
                         <img src={x.image_url} className="h-8 w-8 rounded" />
                     )}
