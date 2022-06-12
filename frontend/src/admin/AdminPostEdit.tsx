@@ -10,7 +10,6 @@ import { GLOBALS } from '..';
 
 export const AdminPostEditContainer: FC<{
     grant: GrantProgram;
-    isNew?: boolean;
 }> = ({ grant }) => {
     const { register, handleSubmit, watch } = useForm({
         defaultValues: {
@@ -105,7 +104,7 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { data: grant, error } = useSWR(
-        () => !isNew && '/api/get/' + id,
+        () => !isNew && `/api/get/${id}`,
         async () => {
             const request = await fetch(GLOBALS.API_URL + '/get?query=' + id);
 
@@ -113,6 +112,8 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
         },
         { revalidateOnFocus: true }
     );
+
+    console.log(grant);
 
     return (
         <div>
@@ -135,8 +136,7 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
                     </svg>
                     Back
                 </button>
-                {isNew && <AdminPostEditContainer grant={grant} />}
-                {!isNew && grant && <AdminPostEditContainer grant={grant} />}
+                {(isNew || grant) && <AdminPostEditContainer grant={grant} />}
             </div>
         </div>
     );
