@@ -11,6 +11,7 @@ export type GrantProgram = {
     status: GrantStatus;
     min_amount: string;
     max_amount: string;
+    currency: string;
     tags: string;
     description: string;
     website: string;

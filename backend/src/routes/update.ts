@@ -11,6 +11,7 @@ const GrantProgramValidate = yup.object({
     status: yup.string(),
     min_amount: yup.string(),
     max_amount: yup.string(),
+    currency: yup.string(),
     tags: yup.string(),
     description: yup.string(),
     website: yup.string(),

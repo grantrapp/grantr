@@ -80,6 +80,9 @@ export const redis = createClient({
                 type: SchemaFieldTypes.NUMERIC,
                 SORTABLE: true,
             },
+            currency: {
+                type: SchemaFieldTypes.TEXT,
+            },
         } as Partial<Record<GrantKeys, SearchSchema>>,
         {
             LANGUAGE: RedisSearchLanguages.ENGLISH,
