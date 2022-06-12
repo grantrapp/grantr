@@ -85,7 +85,7 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { data: grant, error } = useSWR(
-        () => !isNew && '/api/get',
+        () => !isNew && '/api/get/' + id,
         async () => {
             const request = await fetch(GLOBALS.API_URL + '/get?query=' + id);
 

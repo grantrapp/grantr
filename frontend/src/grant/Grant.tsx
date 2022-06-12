@@ -9,7 +9,7 @@ export const Grant = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { data: grant, error } = useSWR(
-        '/api/get',
+        '/api/get/' + id,
         async () => {
             const request = await fetch(GLOBALS.API_URL + '/get?query=' + id);
 
