@@ -22,8 +22,15 @@ export const AdminPostEditContainer: FC<{ grant: GrantProgram }> = ({
 
     return (
         <form
-            onSubmit={handleSubmit((data) => {
+            onSubmit={handleSubmit(async (data) => {
                 console.log('success', data);
+                // Inser fetch here
+                const steve = await fetch(GLOBALS.API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                });
+
+                console.log(steve);
             })}
         >
             <input
@@ -47,9 +54,7 @@ export const AdminPostEditContainer: FC<{ grant: GrantProgram }> = ({
             <div className="flex">
                 <button
                     className="flex flex-row items-center justify-center w-full py-2 rounded-full shadow-lg bg-primary font-bold hover:brightness-90 active:translate-y-1"
-                    onClick={async () => {
-                        // const steve = await fetch(GLOBALS.API_URL + '/update');
-                    }}
+                    type="submit"
                 >
                     SAVE
                 </button>
