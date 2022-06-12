@@ -115,7 +115,8 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
                     </svg>
                     Back
                 </button>
-                <AdminPostEditContainer grant={grant} />
+                {isNew && <AdminPostEditContainer grant={grant} />}
+                {!isNew && grant && <AdminPostEditContainer grant={grant} />}
             </div>
         </div>
     );
