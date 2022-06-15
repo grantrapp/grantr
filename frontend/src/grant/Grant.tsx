@@ -4,6 +4,8 @@ import useSWR from 'swr';
 
 import { GrantProgram } from '../../../backend/src/grant.type';
 import { GLOBALS } from '..';
+import { useAccount } from 'wagmi';
+import { useMemo } from 'react';
 
 export const Grant = () => {
     const navigate = useNavigate();
@@ -16,6 +18,14 @@ export const Grant = () => {
             return (await request.json()) as GrantProgram;
         },
         { revalidateOnFocus: true }
+    );
+    const { data } = useAccount();
+    const isAdmin = useMemo(
+        () =>
+            data &&
+            data.address &&
+            GLOBALS.ADMINS.includes(data.address.toLowerCase()),
+        [data]
     );
 
     return (
@@ -40,6 +50,13 @@ export const Grant = () => {
                             />
                         </svg>
                         Back
+                    </button>
+
+                    <button
+                        onClick={() => navigate(`/admin/${id}/edit`)}
+                        className="text-primary flex flex-row items-center hover:brightness-75"
+                    >
+                        Edit
                     </button>
                 </div>
                 {grant && (

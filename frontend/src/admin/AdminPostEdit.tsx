@@ -1,12 +1,16 @@
 import useSWR from 'swr';
-import { FC } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, UseFormHandleSubmit } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { GrantProgram } from '../../../backend/src/grant.type';
 import { GLOBALS } from '..';
+import { useAccount, useNetwork, useSignTypedData } from 'wagmi';
+import { Profile } from '../components/Profile';
+import { SaveButton } from './SaveButton';
+import { Buffer } from 'buffer';
 
 export const AdminPostEditContainer: FC<{
     grant: GrantProgram;
@@ -26,34 +30,76 @@ export const AdminPostEditContainer: FC<{
             website: grant?.website || '',
         } as Record<keyof GrantProgram, unknown>,
     });
+    const { data: accountData } = useAccount();
+    const isAdmin = useMemo(
+        () =>
+            accountData &&
+            accountData.address &&
+            GLOBALS.ADMINS.includes(accountData.address.toLowerCase()),
+        [accountData]
+    );
+    const { activeChain } = useNetwork();
+    const {
+        data: signedData,
+        signTypedDataAsync,
+        isLoading: isSigning,
+        status,
+    } = useSignTypedData();
 
     const description = watch('description');
 
+    const uploadData = useCallback(
+        (async (data) => {
+            console.log('onSign', data);
+            const dataValue = {
+                grant_id: grant.id,
+                grant_data: JSON.stringify(data),
+            }
+
+            const signature = await signTypedDataAsync({
+                value: dataValue,
+                domain: {
+                    chainId: activeChain.id,
+                    name: 'grantr.app',
+                    version: '1.0',
+                },
+                types: {
+                    GrantUpdateRequest: [
+                        { name: 'grant_id', type: 'string' },
+                        { name: 'grant_data', type: 'string' },
+                    ],
+                },
+            });
+
+            const message_data = {
+                signature,
+                data: dataValue
+            };
+
+            // Inser fetch here
+            const steve = await fetch(GLOBALS.API_URL + '/update', {
+                method: 'POST',
+                body: JSON.stringify(message_data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization:
+                        'Bearer thissecretisverysecretandyouarereadingthis',
+                },
+            });
+
+            console.log(steve);
+
+            if (!steve.ok) {
+                alert('Error');
+            } else {
+                history.back();
+            }
+        }) as SubmitHandler<Record<keyof GrantProgram, unknown>>,
+        []
+    );
+
     return (
-        <form
-            className="text-white"
-            onSubmit={handleSubmit(async (data) => {
-                console.log('success', data);
-                // Inser fetch here
-                const steve = await fetch(GLOBALS.API_URL + '/update', {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization:
-                            'Bearer thissecretisverysecretandyouarereadingthis',
-                    },
-                });
-
-                console.log(steve);
-
-                if (!steve.ok) {
-                    alert('Error');
-                } else {
-                    history.back();
-                }
-            })}
-        >
+        <form className="text-white" onSubmit={handleSubmit(uploadData)}>
             <input
                 className="text-2xl text-white bg-transparent"
                 type="text"
@@ -136,15 +182,10 @@ export const AdminPostEditContainer: FC<{
                 />
             </div>
             <div className="grant-description my-4">
-                <ReactMarkdown children={description} />
+                <ReactMarkdown children={description as string} />
             </div>
             <div className="flex">
-                <button
-                    className="flex flex-row items-center justify-center w-full py-2 rounded-full shadow-lg bg-primary text-black font-bold hover:brightness-90 active:translate-y-1"
-                    type="submit"
-                >
-                    SAVE
-                </button>
+                <SaveButton isAdmin={isAdmin} loading={isSigning} />
             </div>
         </form>
     );
@@ -168,24 +209,27 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
     return (
         <div>
             <div className="max-w-2xl mx-auto px-4">
-                <button
-                    onClick={() => navigate(-1)}
-                    className="text-primary flex flex-row items-center mb-4"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 mr-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                <div className="flex justify-between">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="text-primary flex flex-row items-center mb-4"
                     >
-                        <path
-                            fillRule="evenodd"
-                            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
-                    Back
-                </button>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 mr-1"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                        Back
+                    </button>
+                    <Profile />
+                </div>
                 {(isNew || grant) && <AdminPostEditContainer grant={grant} />}
             </div>
         </div>
