@@ -1,8 +1,10 @@
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useEffect } from 'react';
 import { FC, useState } from 'react';
 import useSWR from 'swr';
 
 import { GLOBALS } from '..';
+import { Profile } from '../components/Profile';
 import { ListContainer } from './ListContainer';
 
 export type FilterConfig = {
@@ -108,7 +110,9 @@ export const Inner: FC<{ categories: Record<string, string> }> = ({
                     Its a Grant thing
                 </div>
             </div>
-            <div className="col-span-12 lg:col-span-8"></div>
+            <div className="col-span-12 lg:col-span-8 flex justify-end">
+                <Profile />
+            </div>
             <SearchContainer
                 selected={selected}
                 setSelected={(key, state) => {

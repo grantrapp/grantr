@@ -5,21 +5,66 @@ import { AdminPostEdit } from './admin/AdminPostEdit';
 import { Grant } from './grant/Grant';
 import { Home } from './home/Home';
 
+import '@rainbow-me/rainbowkit/dist/index.css';
+
+import {
+    darkTheme,
+    getDefaultWallets,
+    RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+
+import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
+import { publicProvider } from 'wagmi/providers/public';
+
+const { chains, provider } = configureChains(
+    [chain.mainnet],
+    [publicProvider()]
+);
+
+const { connectors } = getDefaultWallets({
+    appName: 'Grantr.app',
+    chains,
+});
+
+const wagmiClient = createClient({
+    autoConnect: true,
+    connectors,
+    provider,
+});
+
 export const App = () => {
     return (
-        <BrowserRouter>
-            <div className="max-w-7xl mx-auto px-4 py-12">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/admin" element={<Admin />} />
-                    <Route
-                        path="/admin/new"
-                        element={<AdminPostEdit isNew />}
-                    />
-                    <Route path="/admin/:id/edit" element={<AdminPostEdit />} />
-                    <Route path="/grant/:slug/:id" element={<Grant />} />
-                </Routes>
-            </div>
-        </BrowserRouter>
+        <WagmiConfig client={wagmiClient}>
+            <RainbowKitProvider
+                chains={chains}
+                theme={darkTheme({
+                    accentColor: '#FFCC00',
+                    accentColorForeground: '#000',
+                    borderRadius: 'none',
+                    fontStack: 'system',
+                })}
+            >
+                <BrowserRouter>
+                    <div className="max-w-7xl mx-auto px-4 py-12">
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/admin" element={<Admin />} />
+                            <Route
+                                path="/admin/new"
+                                element={<AdminPostEdit isNew />}
+                            />
+                            <Route
+                                path="/admin/:id/edit"
+                                element={<AdminPostEdit />}
+                            />
+                            <Route
+                                path="/grant/:slug/:id"
+                                element={<Grant />}
+                            />
+                        </Routes>
+                    </div>
+                </BrowserRouter>
+            </RainbowKitProvider>
+        </WagmiConfig>
     );
 };
