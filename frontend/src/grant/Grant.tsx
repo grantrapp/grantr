@@ -6,6 +6,7 @@ import { GrantProgram } from '../../../backend/src/grant.type';
 import { GLOBALS } from '..';
 import { useAccount } from 'wagmi';
 import { useMemo } from 'react';
+import { PoweredBy } from '../components/PoweredBy';
 
 export const Grant = () => {
     const navigate = useNavigate();
@@ -139,20 +140,7 @@ export const Grant = () => {
                             </div>
                         )}
                         <div className="p-4 flex justify-center items-center text-neutral-700">
-                            Powered by&nbsp;
-                            <a
-                                href="https://grantr.app"
-                                className="hover:underline hover:text-white"
-                            >
-                                <div className="flex flex-row w-full justify-center items-center">
-                                    <h1 className="text-sm font-bold text-primary ">
-                                        GRANTR
-                                        <span className="text-xs brightness-75">
-                                            .app
-                                        </span>
-                                    </h1>
-                                </div>
-                            </a>
+                            <PoweredBy />
                         </div>
                     </div>
                 )}

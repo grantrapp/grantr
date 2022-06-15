@@ -1,8 +1,10 @@
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useEffect } from 'react';
 import { FC, useState } from 'react';
 import useSWR from 'swr';
 
 import { GLOBALS } from '..';
+import { PoweredBy } from '../components/PoweredBy';
 import { Profile } from '../components/Profile';
 import { ListContainer } from './ListContainer';
 
@@ -77,13 +79,7 @@ export const SearchContainer: FC<{
             </div>
 
             <div className="p-4 flex justify-center items-center text-neutral-700">
-                Powered by&nbsp;
-                <a
-                    href="https://grantr.app"
-                    className="hover:underline hover:text-white"
-                >
-                    Grantr.app
-                </a>
+                <PoweredBy />
             </div>
         </div>
     );
