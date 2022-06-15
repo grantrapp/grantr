@@ -5,8 +5,6 @@ import { AdminPostEdit } from './admin/AdminPostEdit';
 import { Grant } from './grant/Grant';
 import { Home } from './home/Home';
 
-import '@rainbow-me/rainbowkit/dist/index.css';
-
 import {
     darkTheme,
     getDefaultWallets,
