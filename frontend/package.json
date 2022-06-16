@@ -33,7 +33,7 @@
         "typescript": "^4.7.3"
     },
     "scripts": {
-        "build": "parcel build src/index.html",
+        "build": "parcel build src/index.html --public-url https://grantr.app",
         "start": "parcel src/index.html",
         "dev": "parcel src/index.html",
         "lint": "eslint -c .eslintrc.json --ext .ts ./src"
