@@ -20,3 +20,7 @@ html {
 .grant-description ul>li {
   @apply text-gray-400;
 }
+
+.lcontainer {
+  @apply max-w-7xl mx-auto px-4 py-12;
+}

@@ -43,24 +43,19 @@ export const App = () => {
                 })}
             >
                 <BrowserRouter>
-                    <div className="max-w-7xl mx-auto px-4 py-12">
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/admin" element={<Admin />} />
-                            <Route
-                                path="/admin/new"
-                                element={<AdminPostEdit isNew />}
-                            />
-                            <Route
-                                path="/admin/:id/edit"
-                                element={<AdminPostEdit />}
-                            />
-                            <Route
-                                path="/grant/:slug/:id"
-                                element={<Grant />}
-                            />
-                        </Routes>
-                    </div>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/admin" element={<Admin />} />
+                        <Route
+                            path="/admin/new"
+                            element={<AdminPostEdit isNew />}
+                        />
+                        <Route
+                            path="/admin/:id/edit"
+                            element={<AdminPostEdit />}
+                        />
+                        <Route path="/grant/:slug/:id" element={<Grant />} />
+                    </Routes>
                 </BrowserRouter>
             </RainbowKitProvider>
         </WagmiConfig>

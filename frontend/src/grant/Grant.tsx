@@ -30,7 +30,7 @@ export const Grant = () => {
     );
 
     return (
-        <div>
+        <div className="lcontainer">
             <div className="max-w-2xl mx-auto px-4">
                 <div className="col-span-12 lg:col-span-4 p-2 flex flex-col items-center grow-0 mb-4"></div>
                 <div className="flex flex-row items-center justify-between mb-4">

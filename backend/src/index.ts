@@ -23,6 +23,10 @@ type SearchSchema = RediSearchSchema[GrantKeys];
 export const Globals = {
     IDX_GRANT: 'idx:grantz',
     MAX_RESULTS: 1000,
+    ADMINS: [
+        '0x225f137127d9067788314bc7fcc1f36746a3c3b5', // lucemans.eth
+        '0x347f5f182d4b3043e44ff728fec6d72b23457fc8', // defigirlxo.eth
+    ],
 };
 
 log.info('Loading ENV');

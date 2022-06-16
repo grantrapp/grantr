@@ -54,7 +54,7 @@ export const AdminPostEditContainer: FC<{
             const dataValue = {
                 grant_id: grant.id,
                 grant_data: JSON.stringify(data),
-            }
+            };
 
             const signature = await signTypedDataAsync({
                 value: dataValue,
@@ -73,7 +73,7 @@ export const AdminPostEditContainer: FC<{
 
             const message_data = {
                 signature,
-                data: dataValue
+                data: dataValue,
             };
 
             // Inser fetch here
@@ -82,8 +82,6 @@ export const AdminPostEditContainer: FC<{
                 body: JSON.stringify(message_data),
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization:
-                        'Bearer thissecretisverysecretandyouarereadingthis',
                 },
             });
 
@@ -99,95 +97,106 @@ export const AdminPostEditContainer: FC<{
     );
 
     return (
-        <form className="text-white" onSubmit={handleSubmit(uploadData)}>
-            <input
-                className="text-2xl text-white bg-transparent"
-                type="text"
-                placeholder="Title"
-                {...register('name', { required: true })}
-            />
-            <h2 className="text-lg text-gray-400">
-                {grant?.organization_id || '-'}
-            </h2>
-            <div>
-                <p className="mb-2">Tags</p>
-                <input
-                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
-                    type="text"
-                    placeholder="Tags"
-                    {...register('tags', { required: true })}
-                />
+        <div className="flex flex-col-reverse lg:flex-row gap-8 mt-8">
+            <div className="flex-shrink flex-grow">
+                <div className="grant-description my-4">
+                    <ReactMarkdown children={description as string} />
+                </div>
             </div>
-            <div>
-                <p className="mb-2">Min Amount</p>
-                <input
-                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
-                    type="number"
-                    placeholder="min_amount"
-                    {...register('min_amount', { required: false })}
-                />
+            <div className="w-screen max-w-full lg:max-w-xl flex-grow p-4 border">
+                <form
+                    className="text-white"
+                    onSubmit={handleSubmit(uploadData)}
+                >
+                    <div className="flex flex-col gap-4 sm:flex-row sm:gap-0">
+                        <input
+                            className="text-2xl text-white bg-transparent"
+                            type="text"
+                            placeholder="Title"
+                            {...register('name', { required: true })}
+                        />
+                        <SaveButton isAdmin={isAdmin} loading={isSigning} />
+                    </div>
+
+                    <h2 className="text-lg text-gray-400">
+                        {grant?.organization_id || '-'}
+                    </h2>
+                    <div>
+                        <p className="mb-2">Tags</p>
+                        <input
+                            className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                            type="text"
+                            placeholder="Tags"
+                            {...register('tags', { required: true })}
+                        />
+                    </div>
+                    <div>
+                        <p className="mb-2">Min Amount</p>
+                        <input
+                            className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                            type="number"
+                            placeholder="min_amount"
+                            {...register('min_amount', { required: false })}
+                        />
+                    </div>
+                    <div>
+                        <p className="mb-2">Max Amount</p>
+                        <input
+                            className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                            type="number"
+                            placeholder="max_amount"
+                            {...register('max_amount', { required: false })}
+                        />
+                    </div>
+                    <div>
+                        <p className="mb-2">Currency</p>
+                        <input
+                            className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                            type="text"
+                            placeholder="currency"
+                            {...register('currency', { required: false })}
+                        />
+                    </div>
+                    <div>
+                        <p className="mb-2">Website</p>
+                        <input
+                            className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                            type="url"
+                            placeholder="website"
+                            {...register('website', { required: false })}
+                        />
+                    </div>
+                    <div>
+                        <p className="mb-2">Image URL</p>
+                        <input
+                            className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                            type="url"
+                            placeholder="image_url"
+                            {...register('image_url', { required: false })}
+                        />
+                    </div>
+                    <div>
+                        <p className="mb-2">Apply URL</p>
+                        <input
+                            className="text-lg text-white bg-transparent w-full border p-2 mb-2"
+                            type="url"
+                            placeholder="Apply URL"
+                            {...register('apply_url', { required: false })}
+                        />
+                    </div>
+                    <div>
+                        <p className="mb-2">Description</p>
+                        <textarea
+                            name="description"
+                            id="description"
+                            rows={30}
+                            className="w-full h-fit bg-transparent border p-4"
+                            {...register('description', { required: true })}
+                        />
+                    </div>
+                </form>
             </div>
-            <div>
-                <p className="mb-2">Max Amount</p>
-                <input
-                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
-                    type="number"
-                    placeholder="max_amount"
-                    {...register('max_amount', { required: false })}
-                />
-            </div>
-            <div>
-                <p className="mb-2">Currency</p>
-                <input
-                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
-                    type="text"
-                    placeholder="currency"
-                    {...register('currency', { required: false })}
-                />
-            </div>
-            <div>
-                <p className="mb-2">Website</p>
-                <input
-                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
-                    type="url"
-                    placeholder="website"
-                    {...register('website', { required: false })}
-                />
-            </div>
-            <div>
-                <p className="mb-2">Image URL</p>
-                <input
-                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
-                    type="url"
-                    placeholder="image_url"
-                    {...register('image_url', { required: false })}
-                />
-            </div>
-            <div>
-                <p className="mb-2">Apply URL</p>
-                <input
-                    className="text-lg text-white bg-transparent w-full border p-2 mb-2"
-                    type="url"
-                    placeholder="Apply URL"
-                    {...register('apply_url', { required: false })}
-                />
-            </div>
-            <div>
-                <p className="mb-2">Description</p>
-                <textarea
-                    name="description"
-                    id="description"
-                    className="w-full h-fit bg-transparent border p-4"
-                    {...register('description', { required: true })}
-                />
-            </div>
-            <div className="grant-description my-4">
-                <ReactMarkdown children={description as string} />
-            </div>
-            <div className="flex">
-                <SaveButton isAdmin={isAdmin} loading={isSigning} />
-            </div>
-        </form>
+        </div>
     );
 };
 
@@ -207,8 +216,8 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
     console.log(grant);
 
     return (
-        <div>
-            <div className="max-w-2xl mx-auto px-4">
+        <div className="max-w-screen w-full flex mx-auto px-4 py-12">
+            <div className="max-w-7xl w-full mx-auto px-4">
                 <div className="flex justify-between">
                     <button
                         onClick={() => navigate(-1)}
