@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { FC, useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { SubmitHandler, useForm, UseFormHandleSubmit } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -10,16 +10,15 @@ import { GLOBALS } from '..';
 import { useAccount, useNetwork, useSignTypedData } from 'wagmi';
 import { Profile } from '../components/Profile';
 import { SaveButton } from '../components/SaveButton';
-import { Buffer } from 'buffer';
-import { useRoutes } from 'react-router';
 import { DeleteButton } from '../components/DeleteButton';
 
 export const AdminPostEditContainer: FC<{
     grant: GrantProgram;
 }> = ({ grant }) => {
+    const grant_id = useMemo(() => grant && grant?.id ? grant.id : uuidv4(), [grant?.id]);
     const { register, handleSubmit, watch } = useForm({
         defaultValues: {
-            id: grant?.id ?? uuidv4(),
+            id: grant_id,
             name: grant?.name,
             organization_id: 1,
             description: grant?.description,
@@ -53,9 +52,9 @@ export const AdminPostEditContainer: FC<{
 
     const uploadData = useCallback(
         (async (data) => {
-            console.log('onSign', data);
+            console.log('onSign', grant_id);
             const dataValue = {
-                grant_id: grant.id,
+                grant_id: data.id,
                 grant_data: JSON.stringify(data),
             };
 
@@ -101,7 +100,7 @@ export const AdminPostEditContainer: FC<{
     const deleteData = useCallback(async () => {
         console.log('onSign', grant.id);
         const dataValue = {
-            grant_id: grant.id,
+            grant_id,
             action: 'delete',
         };
 
@@ -163,7 +162,7 @@ export const AdminPostEditContainer: FC<{
                             {...register('name', { required: true })}
                         />
                         <SaveButton isAdmin={isAdmin} loading={isSigning} />
-                        {isAdmin && (
+                        {isAdmin && grant && grant_id == grant.id && (
                             <DeleteButton
                                 loading={isSigning}
                                 onClick={deleteData}

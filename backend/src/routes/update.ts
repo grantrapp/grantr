@@ -1,8 +1,8 @@
 import { verifyTypedData } from 'ethers/lib/utils';
 import { Request, Response } from 'express';
 import * as yup from 'yup';
-import { Globals, redis } from '..';
 
+import { Globals, redis } from '..';
 import { log } from '../logger';
 
 const GrantProgramValidate = yup.object({
@@ -102,14 +102,14 @@ export const updateRoute = async (request: Request, response: Response) => {
         return;
     }
 
-    const doesExist = await redis.EXISTS('grantz:' + parsed_data.id);
+    // const doesExist = await redis.EXISTS('grantz:' + parsed_data.id);
 
-    if (!doesExist) {
-        log.error('Does not exist', parsed_data.id);
-        response.status(404).send('Not found');
+    // if (!doesExist) {
+    //     log.error('Does not exist', parsed_data.id);
+    //     response.status(404).send('Not found');
 
-        return;
-    }
+    //     return;
+    // }
 
     for (const key of Object.keys(parsed_data)) {
         await redis.hSet(
