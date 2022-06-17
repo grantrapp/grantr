@@ -9,8 +9,10 @@ import { GrantProgram } from '../../../backend/src/grant.type';
 import { GLOBALS } from '..';
 import { useAccount, useNetwork, useSignTypedData } from 'wagmi';
 import { Profile } from '../components/Profile';
-import { SaveButton } from './SaveButton';
+import { SaveButton } from '../components/SaveButton';
 import { Buffer } from 'buffer';
+import { useRoutes } from 'react-router';
+import { DeleteButton } from '../components/DeleteButton';
 
 export const AdminPostEditContainer: FC<{
     grant: GrantProgram;
@@ -30,6 +32,7 @@ export const AdminPostEditContainer: FC<{
             website: grant?.website || '',
         } as Record<keyof GrantProgram, unknown>,
     });
+    const nav = useNavigate();
     const { data: accountData } = useAccount();
     const isAdmin = useMemo(
         () =>
@@ -90,11 +93,55 @@ export const AdminPostEditContainer: FC<{
             if (!steve.ok) {
                 alert('Error');
             } else {
-                history.back();
+                nav(-1);
             }
         }) as SubmitHandler<Record<keyof GrantProgram, unknown>>,
         []
     );
+    const deleteData = useCallback(async () => {
+        console.log('onSign', grant.id);
+        const dataValue = {
+            grant_id: grant.id,
+            action: 'delete',
+        };
+
+        const signature = await signTypedDataAsync({
+            value: dataValue,
+            domain: {
+                chainId: activeChain.id,
+                name: 'grantr.app',
+                version: '1.0',
+            },
+            types: {
+                GrantUpdateRequest: [
+                    { name: 'grant_id', type: 'string' },
+                    { name: 'action', type: 'string' },
+                ],
+            },
+        });
+
+        const message_data = {
+            signature,
+            data: dataValue,
+        };
+
+        // Inser fetch here
+        const steve = await fetch(GLOBALS.API_URL + '/delete', {
+            method: 'POST',
+            body: JSON.stringify(message_data),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        console.log(steve);
+
+        if (!steve.ok) {
+            alert('Error');
+        } else {
+            nav(-1);
+        }
+    }, []);
 
     return (
         <div className="flex flex-col-reverse lg:flex-row gap-8 mt-8">
@@ -108,7 +155,7 @@ export const AdminPostEditContainer: FC<{
                     className="text-white"
                     onSubmit={handleSubmit(uploadData)}
                 >
-                    <div className="flex flex-col gap-4 sm:flex-row sm:gap-0">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:gap-2">
                         <input
                             className="text-2xl text-white bg-transparent"
                             type="text"
@@ -116,6 +163,12 @@ export const AdminPostEditContainer: FC<{
                             {...register('name', { required: true })}
                         />
                         <SaveButton isAdmin={isAdmin} loading={isSigning} />
+                        {isAdmin && (
+                            <DeleteButton
+                                loading={isSigning}
+                                onClick={deleteData}
+                            />
+                        )}
                     </div>
 
                     <h2 className="text-lg text-gray-400">

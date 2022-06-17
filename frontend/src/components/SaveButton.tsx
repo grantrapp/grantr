@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Spinner } from '../components/Spinner';
+import { Spinner } from './Spinner';
 
 export const SaveButton: FC<{ isAdmin: boolean; loading: boolean }> = ({
     isAdmin,

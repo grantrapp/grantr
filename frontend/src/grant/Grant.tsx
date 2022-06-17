@@ -53,12 +53,14 @@ export const Grant = () => {
                         Back
                     </button>
 
-                    <button
-                        onClick={() => navigate(`/admin/${id}/edit`)}
-                        className="text-primary flex flex-row items-center hover:brightness-75"
-                    >
-                        Edit
-                    </button>
+                    {isAdmin && (
+                        <button
+                            onClick={() => navigate(`/admin/${id}/edit`)}
+                            className="text-primary flex flex-row items-center hover:brightness-75"
+                        >
+                            Edit
+                        </button>
+                    )}
                 </div>
                 {grant && (
                     <div>
