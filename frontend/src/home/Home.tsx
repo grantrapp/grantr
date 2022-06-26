@@ -78,6 +78,10 @@ export const SearchContainer: FC<{
                 </div>
             </div>
 
+            <a className="block w-full mt-4 p-4 text-center cursor-pointer hover:font-bold" style={{background: "#02e2ac"}} href="https://gitcoin.co/grants/6672/grantrapp" target="_blank">
+                Support us on Gitcoin
+            </a>
+
             <div className="p-4 flex justify-center items-center text-neutral-700">
                 <PoweredBy />
             </div>
