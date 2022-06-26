@@ -19,6 +19,8 @@ const FETCH_VALUES: Set<keyof GrantProgram> = new Set<keyof GrantProgram>([
     'image_url',
     'apply_url',
     'currency',
+    'whitepaper',
+    'contact',
 ]);
 
 export const getRoute = async (request: Request, response: Response) => {

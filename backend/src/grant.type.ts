@@ -20,4 +20,6 @@ export type GrantProgram = {
     ecosystem: GrantEcosystem[];
     socials: Record<SocialType, string>;
     hit: number; // private
+    whitepaper: string;
+    contact: Record<string, string>;
 };
