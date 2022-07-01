@@ -69,12 +69,6 @@ export const SearchContainer: FC<{
                             </div>
                         ))}
                     </div>
-                    <button
-                        onClick={() => {}}
-                        className="text-sm px-4 py-2 bg-dark text-white self-end mt-4 focus:outline-2"
-                    >
-                        APPLY
-                    </button>
                 </div>
             </div>
 
