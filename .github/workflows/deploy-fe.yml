@@ -25,18 +25,11 @@ jobs:
           cd frontend
           NODE_ENV=production
           yarn build
-      - uses: vimtor/action-zip@v1
+      - name: Edgeserver Upload
+        uses: lvkdotsh/edgeserver-action@master
         with:
-          files: frontend/dist/
-          dest: result.zip
-      - uses: actions/upload-artifact@v2
-        with:
-          name: my-artifact
-          path: ${{ github.workspace }}/result.zip
-      - name: Deploy Stage
-        uses: fjogeleit/http-request-action@master
-        with:
-          url: 'https://signal.lvksh.cloud/deployments/push?site=58153175907045376'
-          method: 'PUT'
-          bearerToken: ${{ secrets.SIGNAL_TOKEN }}
-          files: '{ "data": "${{ github.workspace }}/result.zip" }'
+          app_id: "58153175907045376"
+          server: https://api.edgeserver.io
+          token: ${{ secrets.SIGNAL_TOKEN }}
+          directory: frontend/dist/
+          
