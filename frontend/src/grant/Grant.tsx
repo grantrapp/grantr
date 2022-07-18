@@ -67,10 +67,12 @@ export const Grant = () => {
                         <div className="py-4">
                             <div className="flex gap-4">
                                 {grant.image_url && (
-                                    <img
-                                        src={grant.image_url}
-                                        className="h-16 w-16 rounded"
-                                    />
+                                    <div className="w-16 h-16 flex items-center justify-center">
+                                        <img
+                                            src={grant.image_url}
+                                            className="w-full h-auto"
+                                        />
+                                    </div>
                                 )}
                                 <div className="flex flex-col justify-center grow shrink">
                                     <h1 className="text-2xl text-white">
