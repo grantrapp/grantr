@@ -35,7 +35,12 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
             <div className="cursor-pointer mb-2">
                 <div className="flex gap-2 mb-2">
                     {x.image_url && (
-                        <img src={x.image_url} className="h-8 w-8 rounded" />
+                        <div className="w-8 h-8 flex justify-center items-center">
+                            <img
+                                src={x.image_url}
+                                className="rounded object-fill w-full h-auto"
+                            />
+                        </div>
                     )}
                     <span className="font-bold">{x.name}</span>
                 </div>
