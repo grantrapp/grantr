@@ -1,4 +1,4 @@
-name: Deploy to Signal
+name: Deploy to EdgeServer
 
 on:
   push:
