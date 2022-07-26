@@ -17,14 +17,18 @@ jobs:
         with:
           node-version: '16.9.1'
           registry-url: 'https://registry.npmjs.org'
-      - run: |
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 6.0.2
+      - name: Install packages
+        run: |
           cd frontend
-          yarn
+          pnpm install
       - name: Build
         run: |
           cd frontend
           NODE_ENV=production
-          yarn build
+          pnpm build
       - name: Edgeserver Upload
         uses: lvkdotsh/edgeserver-action@master
         with:
