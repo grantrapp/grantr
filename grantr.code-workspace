@@ -1,14 +1,14 @@
 {
-	"folders": [
-		{
-			"path": "frontend"
-		},
-		{
-			"path": "backend"
-		},
-		{
-			"path": ".",
-			"name": "Grantr"
-		}
-	]
+    "folders": [
+        {
+            "path": "frontend"
+        },
+        {
+            "path": "backend"
+        },
+        {
+            "path": ".",
+            "name": "Grantr"
+        }
+    ]
 }
