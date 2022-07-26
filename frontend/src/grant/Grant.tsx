@@ -20,7 +20,7 @@ export const Grant = () => {
         },
         { revalidateOnFocus: true }
     );
-    const { data } = useAccount();
+    const data = useAccount();
     const isAdmin = useMemo(
         () =>
             data &&

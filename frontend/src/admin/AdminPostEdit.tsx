@@ -13,9 +13,12 @@ import { SaveButton } from '../components/SaveButton';
 import { DeleteButton } from '../components/DeleteButton';
 
 export const AdminPostEditContainer: FC<{
-    grant: GrantProgram;
+    grant: GrantProgram | undefined;
 }> = ({ grant }) => {
-    const grant_id = useMemo(() => grant && grant?.id ? grant.id : uuidv4(), [grant?.id]);
+    const grant_id = useMemo(
+        () => (grant && grant?.id ? grant.id : uuidv4()),
+        [grant?.id]
+    );
     const { register, handleSubmit, watch } = useForm({
         defaultValues: {
             id: grant_id,
@@ -29,18 +32,20 @@ export const AdminPostEditContainer: FC<{
             apply_url: grant?.apply_url || '',
             image_url: grant?.image_url || '',
             website: grant?.website || '',
-        } as Record<keyof GrantProgram, unknown>,
+        },
     });
     const nav = useNavigate();
-    const { data: accountData } = useAccount();
+    const accountData = useAccount();
     const isAdmin = useMemo(
         () =>
             accountData &&
             accountData.address &&
-            GLOBALS.ADMINS.includes(accountData.address.toLowerCase()),
+            GLOBALS.ADMINS.includes(accountData.address.toLowerCase())
+                ? true
+                : false,
         [accountData]
     );
-    const { activeChain } = useNetwork();
+    const { chain: activeChain } = useNetwork();
     const {
         data: signedData,
         signTypedDataAsync,
@@ -50,55 +55,52 @@ export const AdminPostEditContainer: FC<{
 
     const description = watch('description');
 
-    const uploadData = useCallback(
-        (async (data) => {
-            console.log('onSign', grant_id);
-            const dataValue = {
-                grant_id: data.id,
-                grant_data: JSON.stringify(data),
-            };
+    const uploadData = useCallback(async (data: Record<string, unknown>) => {
+        console.log('onSign', grant_id);
+        const dataValue = {
+            grant_id: data.id,
+            grant_data: JSON.stringify(data),
+        };
 
-            const signature = await signTypedDataAsync({
-                value: dataValue,
-                domain: {
-                    chainId: activeChain.id,
-                    name: 'grantr.app',
-                    version: '1.0',
-                },
-                types: {
-                    GrantUpdateRequest: [
-                        { name: 'grant_id', type: 'string' },
-                        { name: 'grant_data', type: 'string' },
-                    ],
-                },
-            });
+        const signature = await signTypedDataAsync({
+            value: dataValue,
+            domain: {
+                chainId: activeChain?.id,
+                name: 'grantr.app',
+                version: '1.0',
+            },
+            types: {
+                GrantUpdateRequest: [
+                    { name: 'grant_id', type: 'string' },
+                    { name: 'grant_data', type: 'string' },
+                ],
+            },
+        });
 
-            const message_data = {
-                signature,
-                data: dataValue,
-            };
+        const message_data = {
+            signature,
+            data: dataValue,
+        };
 
-            // Inser fetch here
-            const steve = await fetch(GLOBALS.API_URL + '/update', {
-                method: 'POST',
-                body: JSON.stringify(message_data),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        // Inser fetch here
+        const steve = await fetch(GLOBALS.API_URL + '/update', {
+            method: 'POST',
+            body: JSON.stringify(message_data),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-            console.log(steve);
+        console.log(steve);
 
-            if (!steve.ok) {
-                alert('Error');
-            } else {
-                nav(-1);
-            }
-        }) as SubmitHandler<Record<keyof GrantProgram, unknown>>,
-        []
-    );
+        if (!steve.ok) {
+            alert('Error');
+        } else {
+            nav(-1);
+        }
+    }, []);
     const deleteData = useCallback(async () => {
-        console.log('onSign', grant.id);
+        console.log('onSign', grant?.id);
         const dataValue = {
             grant_id,
             action: 'delete',
@@ -107,7 +109,7 @@ export const AdminPostEditContainer: FC<{
         const signature = await signTypedDataAsync({
             value: dataValue,
             domain: {
-                chainId: activeChain.id,
+                chainId: activeChain?.id,
                 name: 'grantr.app',
                 version: '1.0',
             },
@@ -239,7 +241,6 @@ export const AdminPostEditContainer: FC<{
                     <div>
                         <p className="mb-2">Description</p>
                         <textarea
-                            name="description"
                             id="description"
                             rows={30}
                             className="w-full h-fit bg-transparent border p-4"

@@ -11,5 +11,5 @@ export const GLOBALS = {
         '0x347f5f182d4b3043e44ff728fec6d72b23457fc8', // defigirlxo.eth
     ],
 };
-
+// @ts-ignore
 createRoot(document.querySelector('#root')).render(<App />);

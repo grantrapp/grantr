@@ -31,7 +31,7 @@ export const AdminCrown: FC = () => {
 };
 
 export const Profile = () => {
-    const { data } = useAccount();
+    const data = useAccount();
     const isAdmin = useMemo(
         () =>
             data &&
