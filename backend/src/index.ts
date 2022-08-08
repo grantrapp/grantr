@@ -96,8 +96,6 @@ export const redis = createClient({
         }
     );
 
-    log.debug('rofl');
-
     log.express('Starting...');
 
     const server = Express();
