@@ -46,17 +46,24 @@ export const App = () => {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<WIP />} />
-                        {/* <Route path="/" element={<Home />} /> */}
-                        {/* <Route path="/admin" element={<Admin />} />
-                        <Route
-                            path="/admin/new"
-                            element={<AdminPostEdit isNew />}
-                        />
-                        <Route
-                            path="/admin/:id/edit"
-                            element={<AdminPostEdit />}
-                        />
-                        <Route path="/grant/:slug/:id" element={<Grant />} /> */}
+                        {localStorage.getItem('luc-debug') && (
+                            <>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/admin" element={<Admin />} />
+                                <Route
+                                    path="/admin/new"
+                                    element={<AdminPostEdit isNew />}
+                                />
+                                <Route
+                                    path="/admin/:id/edit"
+                                    element={<AdminPostEdit />}
+                                />
+                                <Route
+                                    path="/grant/:slug/:id"
+                                    element={<Grant />}
+                                />
+                            </>
+                        )}
                     </Routes>
                 </BrowserRouter>
             </RainbowKitProvider>

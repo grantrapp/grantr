@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: grantr
+data:
+  redis-config: |
+    save 60 100
+    stop-writes-on-bgsave-error no
+    rdbcompression yes
+    dbfilename dump.rdb
