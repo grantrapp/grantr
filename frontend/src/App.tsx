@@ -13,6 +13,7 @@ import {
 
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
+import { WIP } from './WIP';
 
 const { chains, provider } = configureChains(
     [chain.mainnet],
@@ -44,8 +45,9 @@ export const App = () => {
             >
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/admin" element={<Admin />} />
+                        <Route path="/" element={<WIP />} />
+                        {/* <Route path="/" element={<Home />} /> */}
+                        {/* <Route path="/admin" element={<Admin />} />
                         <Route
                             path="/admin/new"
                             element={<AdminPostEdit isNew />}
@@ -54,7 +56,7 @@ export const App = () => {
                             path="/admin/:id/edit"
                             element={<AdminPostEdit />}
                         />
-                        <Route path="/grant/:slug/:id" element={<Grant />} />
+                        <Route path="/grant/:slug/:id" element={<Grant />} /> */}
                     </Routes>
                 </BrowserRouter>
             </RainbowKitProvider>
