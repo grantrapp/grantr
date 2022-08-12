@@ -45,8 +45,7 @@ export const App = () => {
             >
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<WIP />} />
-                        {localStorage.getItem('luc-debug') && (
+                        {localStorage.getItem('luc-debug') ? (
                             <>
                                 <Route path="/" element={<Home />} />
                                 <Route path="/admin" element={<Admin />} />
@@ -63,6 +62,8 @@ export const App = () => {
                                     element={<Grant />}
                                 />
                             </>
+                        ) : (
+                            <Route path="/" element={<WIP />} />
                         )}
                     </Routes>
                 </BrowserRouter>
