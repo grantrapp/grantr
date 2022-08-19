@@ -9,3 +9,4 @@ data:
     stop-writes-on-bgsave-error no
     rdbcompression yes
     dbfilename dump.rdb
+    loadmodule /usr/lib/redis/modules/redisearch.so

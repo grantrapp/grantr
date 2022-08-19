@@ -12,11 +12,15 @@ import { Profile } from '../components/Profile';
 import { SaveButton } from '../components/SaveButton';
 import { DeleteButton } from '../components/DeleteButton';
 
+import {generateSunflake } from 'sunflake';
+
+const sunflake = generateSunflake();
+
 export const AdminPostEditContainer: FC<{
     grant: GrantProgram | undefined;
 }> = ({ grant }) => {
     const grant_id = useMemo(
-        () => (grant && grant?.id ? grant.id : uuidv4()),
+        () => (grant && grant?.id ? grant.id : sunflake()),
         [grant?.id]
     );
     const { register, handleSubmit, watch } = useForm({
