@@ -58,7 +58,7 @@ export const App = () => {
                                     element={<AdminPostEdit />}
                                 />
                                 <Route
-                                    path="/grant/:slug/:id"
+                                    path="/grant/:id"
                                     element={<Grant />}
                                 />
                             </>
