@@ -21,7 +21,10 @@ const FETCH_VALUES: Set<keyof GrantProgram> = new Set<keyof GrantProgram>([
     'currency',
     'whitepaper',
     'contact',
-]);
+    'telegram',
+    'discord',
+    'twitter',
+] as unknown as (keyof GrantProgram)[]);
 
 export const getRoute = async (request: Request, response: Response) => {
     const data = request.query;

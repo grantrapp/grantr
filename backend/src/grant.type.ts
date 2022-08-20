@@ -2,8 +2,6 @@ type GrantStatus = 'ongoing';
 
 type GrantEcosystem = 'ethereum' | 'solana' | 'polygon' | 'aave';
 
-type SocialType = 'discord' | 'twitter';
-
 export type GrantProgram = {
     id: string;
     name: string;
@@ -18,8 +16,9 @@ export type GrantProgram = {
     description: string;
     website: string;
     ecosystem: GrantEcosystem[];
-    socials: Record<SocialType, string>;
+    discord: string;
+    twitter: string;
     hit: number; // private
     whitepaper: string;
-    contact: Record<string, string>;
+    contact: string;
 };
