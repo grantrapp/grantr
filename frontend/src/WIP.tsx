@@ -1,10 +1,12 @@
-import { PoweredBy } from "./components/PoweredBy";
+import { DeleteButton } from './components/DeleteButton';
+import { PoweredBy } from './components/PoweredBy';
+import { TwitterButton } from './components/TwitterButton';
 
 export const WIP = () => {
-
     return (
         <div className="lcontainer">
-            <div className="grid grid-cols-12 gap-4">
+            <div className="w-full flex flex-col items-center">
+                {/* <div className="grid grid-cols-12 gap-4"> */}
                 <div className="col-span-12 lg:col-span-4 p-2 flex flex-col items-center grow-0">
                     <h1 className="text-4xl font-bold text-primary">
                         GRANTR
@@ -14,15 +16,16 @@ export const WIP = () => {
                         Its a Grant thing
                     </div>
                 </div>
-                <div className="col-span-12 lg:col-span-8 flex justify-end">
-                    {/* <Profile /> */}
 
-                </div>
-            
                 <div className="text-white col-span-12">
                     We are currently under construction. We will be back soon!
                 </div>
+
+                <div className="text-white col-span-12">
+                    <TwitterButton />
+                </div>
             </div>
+            {/* </div> */}
         </div>
     );
 };
