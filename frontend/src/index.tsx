@@ -16,15 +16,17 @@ createRoot(document.querySelector('#root')).render(<App />);
 
 const match = 'pleaseopen';
 let last_key = '';
-document.addEventListener('keydown', (event) => {
-    if (match.startsWith(last_key + event.key)) {
-        last_key += event.key;
+if (!localStorage.getItem('luc-debug')) {
+    document.addEventListener('keydown', (event) => {
+        if (match.startsWith(last_key + event.key)) {
+            last_key += event.key;
 
-        if (last_key.length == match.length) {
-            localStorage.setItem('luc-debug', 'pleaseopen');
-            location.reload();
+            if (last_key.length == match.length) {
+                localStorage.setItem('luc-debug', 'pleaseopen');
+                location.reload();
+            }
+        } else {
+            last_key = '';
         }
-    } else {
-        last_key = '';
-    }
-});
+    });
+}
