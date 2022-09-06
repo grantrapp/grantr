@@ -9,6 +9,7 @@ export const GLOBALS = {
     ADMINS: [
         '0x225f137127d9067788314bc7fcc1f36746a3c3b5', // lucemans.eth
         '0x347f5f182d4b3043e44ff728fec6d72b23457fc8', // defigirlxo.eth
+        '0xf19e71fdaba5c2916a9cfae87fdaf12516e3119f',
     ],
 };
 // @ts-ignore
