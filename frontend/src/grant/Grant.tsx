@@ -7,6 +7,7 @@ import { GLOBALS } from '..';
 import { useAccount } from 'wagmi';
 import { useMemo } from 'react';
 import { PoweredBy } from '../components/PoweredBy';
+import { GrantLinks } from '../components/GrantLinks';
 
 export const Grant = () => {
     const navigate = useNavigate();
@@ -74,48 +75,39 @@ export const Grant = () => {
                                         />
                                     </div>
                                 )}
-                                <div className="flex flex-col justify-center grow shrink">
-                                    <h1 className="text-2xl text-white">
-                                        {grant.name}
-                                    </h1>
-                                    {grant.website && (
-                                        <div className="text-white hover:underline brightness-75">
-                                            <a
-                                                href={grant.website}
-                                                target="_blank"
-                                                className="truncate"
-                                            >
-                                                {grant.website.length > 48
-                                                    ? grant.website.slice(
-                                                          0,
-                                                          48
-                                                      ) + '...'
-                                                    : grant.website}
-                                            </a>
+                                <div className='w-full'>
+                                    <div className="flex flex-wrap justify-between w-full">
+                                        <div className="flex flex-col justify-center grow shrink">
+                                            <h1 className="text-2xl mr-1 text-white">
+                                                {grant.name}
+                                            </h1>
                                         </div>
-                                    )}
-                                </div>
-                                <div>
-                                    {grant.apply_url && (
-                                        <a
-                                            target="_blank"
-                                            href={grant.apply_url}
-                                            className="flex flex-row items-center justify-center w-full py-2 px-4 rounded-md shadow-lg bg-primary font-bold text-xs hover:brightness-90"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-5 w-5 mr-1"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                                                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                                            </svg>
-                                            APPLY
-                                        </a>
-                                    )}
+                                        <div>
+                                            {grant.apply_url && (
+                                                <a
+                                                    target="_blank"
+                                                    href={grant.apply_url}
+                                                    className="flex flex-row items-center justify-center w-full py-2 px-4 rounded-md shadow-lg bg-primary font-bold text-xs hover:brightness-90"
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        className="h-5 w-5 mr-1"
+                                                        viewBox="0 0 20 20"
+                                                        fill="currentColor"
+                                                    >
+                                                        <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                                                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                                                    </svg>
+                                                    APPLY
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <GrantLinks grant={grant} />
                                 </div>
                             </div>
+
                             <h2 className="text-lg text-gray-400">
                                 {/* {grant.organization_id || '-'} */}
                             </h2>
@@ -123,6 +115,7 @@ export const Grant = () => {
                         <div className="grant-description my-4">
                             <ReactMarkdown children={grant.description} />
                         </div>
+
                         {grant.apply_url && (
                             <div className="flex">
                                 <a
@@ -143,6 +136,7 @@ export const Grant = () => {
                                 </a>
                             </div>
                         )}
+
                         <div className="p-4 flex justify-center items-center text-neutral-700">
                             <PoweredBy />
                         </div>
