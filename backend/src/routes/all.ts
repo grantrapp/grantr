@@ -1,17 +1,28 @@
 import { Request, Response } from 'express';
 
-import { Globals, redis } from '..';
+import { redis } from '..';
 import { log } from '../logger';
+import { GrantProgram } from './../grant.type';
 
 export const allRoute = async (request: Request, response: Response) => {
     try {
-        //@ts-ignore
-        const search_data = await redis.ft.search(Globals.IDX_GRANT, '*', {
-            LIMIT: { size: Globals.MAX_RESULTS, from: 0 },
-            SORTBY: { BY: 'hit', DIRECTION: 'DESC' },
-        });
+        const keys = await redis.keys('grantz:*');
 
-        response.send(search_data);
+        const grants: {
+            id: string;
+            value: Partial<GrantProgram>;
+        }[] = [];
+
+        for (const key of keys) {
+            const grant = await redis.hGetAll(key);
+
+            grants.push({
+                id: key,
+                value: grant,
+            });
+        }
+
+        response.send(grants);
 
         return;
     } catch (error) {
