@@ -24,7 +24,7 @@ export const GrantLinks: FC<{ grant: GrantProgram }> = ({ grant }) => {
                         className="text-ellipsis"
                     >
                         <Globe className="inline w-4 mr-1" />
-                        Website
+                        { new URL(grant.website).hostname }
                     </a>
                 </div>
             )}
