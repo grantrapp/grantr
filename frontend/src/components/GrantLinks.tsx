@@ -76,15 +76,15 @@ export const GrantLinks: FC<{ grant: GrantProgram }> = ({ grant }) => {
                         className="truncate"
                     >
                         <MessageSquare className="inline w-4 mr-1" />
-                        Telegram
+                        {new URL(grant.telegram).hostname === 't.me' ? '@' + new URL(grant.telegram).pathname.substring(1) : grant.telegram}
                     </a>
                 </div>
             )}
 
             {grant.currency && (
                 <div className="text-white brightness-75">
-                        <DollarSign className="inline w-4 mr-1" />
-                        {grant.currency}
+                    <DollarSign className="inline w-4 mr-1" />
+                    {grant.currency}
                 </div>
             )}
 
