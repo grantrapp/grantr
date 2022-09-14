@@ -12,6 +12,7 @@ export const GLOBALS = {
         '0xf19e71fdaba5c2916a9cfae87fdaf12516e3119f',
     ],
 };
+
 // @ts-ignore
 createRoot(document.querySelector('#root')).render(<App />);
 
