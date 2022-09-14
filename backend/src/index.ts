@@ -16,7 +16,8 @@ import { allRoute } from './routes/all';
 import { deleteRoute } from './routes/delete';
 import { getRoute } from './routes/get';
 import { searchRoute } from './routes/search';
-import { tagListRoute } from './routes/taglist';
+import { tagsRouter } from './routes/tags';
+import { fetchTags } from './routes/tags/list';
 import { updateRoute } from './routes/update';
 
 type GrantKeys = keyof GrantProgram;
@@ -28,6 +29,7 @@ export const Globals = {
         '0x225f137127d9067788314bc7fcc1f36746a3c3b5', // lucemans.eth
         '0x347f5f182d4b3043e44ff728fec6d72b23457fc8', // defigirlxo.eth
         '0xf19e71fdaba5c2916a9cfae87fdaf12516e3119f',
+        '0xd577D1322cB22eB6EAC1a008F62b18807921EFBc'.toLowerCase(), // helgesson.eth
     ],
 };
 
@@ -110,10 +112,12 @@ export const redis = createClient({
 
     server.get('/search', searchRoute);
     server.get('/all', allRoute);
-    server.get('/tags', tagListRoute);
+    server.use('/tags', tagsRouter);
     server.post('/update', updateRoute);
     server.get('/get', getRoute);
     server.post('/delete', deleteRoute);
+
+    fetchTags();
 
     log.express('Listening to port 3000');
 

@@ -15,7 +15,7 @@ export type FilterConfig = {
 export const SearchContainer: FC<{
     selected: string[];
     setSelected: (key: string, state: boolean) => void;
-    categories: Record<string, string>;
+    categories: Record<string, Record<string, string>>;
 }> = ({ selected, setSelected, categories }) => {
     return (
         <div className="col-span-12 lg:col-span-4">
@@ -63,7 +63,7 @@ export const SearchContainer: FC<{
                                     }`}
                                 />
                                 <span className="tracking-wider">
-                                    {categories[key]}
+                                    {categories[key].name || `! ${key}`}
                                 </span>
                             </div>
                         ))}
@@ -82,7 +82,7 @@ export const SearchContainer: FC<{
     );
 };
 
-export const Inner: FC<{ categories: Record<string, string> }> = ({
+export const Inner: FC<{ categories: Record<string, Record<string, string>> }> = ({
     categories,
 }) => {
     const [selected, setSelected] = useState<string[]>([]);
@@ -130,9 +130,9 @@ export const Inner: FC<{ categories: Record<string, string> }> = ({
 
 export const Home: FC = () => {
     const { data, error } = useSWR('/api/tags', async () => {
-        const request = await fetch(GLOBALS.API_URL + '/tags');
+        const request = await fetch(GLOBALS.API_URL + '/tags/list');
 
-        return (await request.json()) as Record<string, string>;
+        return (await request.json()) as Record<string, Record<string, string>>;
     });
 
     if (!data) {
