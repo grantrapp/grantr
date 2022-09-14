@@ -24,7 +24,10 @@ export const ListContainer: FC<{ filters: FilterConfig }> = ({ filters }) => {
                         : '/all')
             );
 
-            return (await request.json()) as { id: string; value: GrantProgram }[];
+            return (await request.json()) as {
+                total: number;
+                documents: { id: string; value: GrantProgram }[];
+            };
         }
     );
 
@@ -41,11 +44,11 @@ export const ListContainer: FC<{ filters: FilterConfig }> = ({ filters }) => {
             />
             <div className="flex flex-col space-y-4">
                 {data &&
-                    data.length > 0 &&
-                    data.map((x) => (
+                    data.total > 0 &&
+                    data.documents.map((x) => (
                         <GrantCard x={x.value} key={x.id} filters={filters} />
                     ))}
-                {(!data || data.length == 0) && (
+                {(!data || data.total == 0) && (
                     <p className="text-neutral-500 text-center p-4">
                         No grants matching your search
                     </p>
