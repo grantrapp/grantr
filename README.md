@@ -18,8 +18,8 @@
     <a href="https://github.com/grantrapp/grantr/blob/master/LICENSE">
         <img src="https://badgen.net/gitlab/license/lenster/lenster" alt="Licence">
     </a>
-    <a href="https://discord.gg/QnRvyGNcYU">
-        <img src="https://img.shields.io/discord/986714262359666698.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2" alt="Discord">
+    <a href="https://discord.gg/RDmuVjy23E">
+        <img src="https://img.shields.io/discord/986316109399605338.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2" alt="Discord">
     </a>
     <a href="https://twitter.com/grantrapp">
         <img src="https://img.shields.io/twitter/follow/grantrapp?label=grantrapp&style=flat&logo=twitter&color=1DA1F2" alt="Grantr Twitter">
