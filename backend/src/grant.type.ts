@@ -21,4 +21,5 @@ export type GrantProgram = {
     hit: number; // private
     whitepaper: string;
     contact: string;
+    telegram: string;
 };
