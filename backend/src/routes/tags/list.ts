@@ -23,6 +23,8 @@ export const fetchTags = async () => {
     }
 };
 
+setInterval(fetchTags, 1000 * 60 * 5); // 5 minutes
+
 export const tagListRoute = async (request: Request, response: Response) => {
     response.status(200).send(tagList);
 };
