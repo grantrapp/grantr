@@ -9,7 +9,10 @@ export const AdminPostList: FC = () => {
     const { data, error } = useSWR('/api/all', async () => {
         const request = await fetch(GLOBALS.API_URL + '/all');
 
-        return (await request.json()) as { id: string; value: GrantProgram }[];
+        return (await request.json()) as {
+            total: number;
+            documents: { id: string; value: GrantProgram }[];
+        };
     });
 
     if (error) return <div>Error loading data</div>;
@@ -18,7 +21,7 @@ export const AdminPostList: FC = () => {
 
     return (
         <>
-            {data.map((program) => (
+            {data.documents.map((program) => (
                 <div
                     key={program.value.id}
                     className="w-full bg-primary p-4 flex justify-between mb-4 rounded-xl"
