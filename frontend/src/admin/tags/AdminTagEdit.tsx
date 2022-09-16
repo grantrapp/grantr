@@ -15,7 +15,7 @@ export const AdminTagEditContainer: FC<{
     tag: [string, Tag] | undefined;
 }> = ({ tag: tagFull }) => {
 
-    const [tagKey, tag] = tagFull;
+    const [tagKey, tag] = tagFull ?? [];
 
     const { register, handleSubmit, watch } = useForm({
         defaultValues: {
