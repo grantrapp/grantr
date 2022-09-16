@@ -14,6 +14,7 @@ import {
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { WIP } from './WIP';
+import { PageNotFound } from './PageNotFound';
 
 const { chains, provider } = configureChains(
     [chain.mainnet],
@@ -65,6 +66,8 @@ export const App = () => {
                         ) : (
                             <Route path="/" element={<WIP />} />
                         )}
+
+                        <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </BrowserRouter>
             </RainbowKitProvider>
