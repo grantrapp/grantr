@@ -8,7 +8,7 @@ export const PageNotFound = () => {
             <div className="w-full flex flex-col items-center h-screen text-center">
                 {/* <div className="grid grid-cols-12 gap-4"> */}
 
-                <div className="col-span-12 text-6xl mt-auto text-primary">
+                <div className="col-span-12 text-4xl sm:text-6xl mt-auto text-primary">
                     <span className="text-8xl">404</span>
                     <br />Page Not Found
                 </div>
