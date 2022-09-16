@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import useSWR from 'swr';
 
 import { GLOBALS } from '..';
+import { Tag } from '../../../backend/src/tag.type';
 import { PoweredBy } from '../components/PoweredBy';
 import { Profile } from '../components/Profile';
 import { ListContainer } from './ListContainer';
@@ -15,7 +16,7 @@ export type FilterConfig = {
 export const SearchContainer: FC<{
     selected: string[];
     setSelected: (key: string, state: boolean) => void;
-    categories: Record<string, Record<string, string>>;
+    categories: Record<string, Tag>;
 }> = ({ selected, setSelected, categories }) => {
     return (
         <div className="col-span-12 lg:col-span-4">
@@ -82,7 +83,7 @@ export const SearchContainer: FC<{
     );
 };
 
-export const Inner: FC<{ categories: Record<string, Record<string, string>> }> = ({
+export const Inner: FC<{ categories: Record<string, Tag> }> = ({
     categories,
 }) => {
     const [selected, setSelected] = useState<string[]>([]);
@@ -109,6 +110,7 @@ export const Inner: FC<{ categories: Record<string, Record<string, string>> }> =
                 <SearchContainer
                     selected={selected}
                     setSelected={(key, state) => {
+                        console.log({key, state, selected});
                         setSelected(
                             state
                                 ? [...selected, key]
@@ -118,6 +120,7 @@ export const Inner: FC<{ categories: Record<string, Record<string, string>> }> =
                     categories={categories}
                 />
                 <ListContainer
+                    categories={categories}
                     filters={{
                         tags: selected,
                         ecosystem: [],
@@ -132,7 +135,7 @@ export const Home: FC = () => {
     const { data, error } = useSWR('/api/tags', async () => {
         const request = await fetch(GLOBALS.API_URL + '/tags/list');
 
-        return (await request.json()) as Record<string, Record<string, string>>;
+        return (await request.json()) as Record<string, Tag>;
     });
 
     if (!data) {

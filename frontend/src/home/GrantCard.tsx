@@ -3,18 +3,28 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { GrantProgram } from '../../../backend/src/grant.type';
+import { Tag } from '../../../backend/src/tag.type';
 import { FilterConfig } from './Home';
 
-export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
-    x,
-    filters,
-}) => {
-    const tags = useMemo(() => {
+export const GrantCard: FC<{
+    x: GrantProgram;
+    filters: FilterConfig;
+    categories: Record<string, Tag>;
+}> = ({ x, filters, categories }) => {
+    const tags = useMemo<[string, string][]>(() => {
         if (!x.tags) return;
 
-        return (x.tags as unknown as string).split(',').sort((a, _) => {
-            return filters.tags.includes(a) ? -1 : 1;
-        });
+        return (x.tags as unknown as string)
+            .split(',')
+            .sort((a, _) => {
+                return filters.tags.includes(a) ? -1 : 1;
+            })
+            .map((tag) => {
+                if (!categories[tag]) return;
+
+                return [tag, categories[tag]?.name] as [string, string];
+            })
+            .filter((x) => x);
     }, [filters, x]);
 
     const grantAmountRange = useMemo(() => {
@@ -86,10 +96,10 @@ export const GrantCard: FC<{ x: GrantProgram; filters: FilterConfig }> = ({
                 {tags &&
                     tags
                         .slice(0, 4)
-                        .map((tag) => (
+                        .map(([key, tag]) => (
                             <div
                                 className={`bg-gray-900 text-white px-1 text-xs ${
-                                    !filters.tags.includes(tag) && 'opacity-50'
+                                    !filters.tags.includes(key) && 'opacity-50'
                                 }`}
                             >
                                 {tag}

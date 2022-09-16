@@ -6,8 +6,12 @@ import { GrantProgram } from '../../../backend/src/grant.type';
 import { GLOBALS } from '..';
 import { GrantCard } from './GrantCard';
 import { FilterConfig } from './Home';
+import { Tag } from '../../../backend/src/tag.type';
 
-export const ListContainer: FC<{ filters: FilterConfig }> = ({ filters }) => {
+export const ListContainer: FC<{
+    filters: FilterConfig;
+    categories: Record<string, Tag>;
+}> = ({ filters, categories }) => {
     const [search, setSearch] = useState('');
     const [query] = useDebounce(search.length >= 3 ? search : '', 250, {});
     const seeking = query.length > 2 || filters.tags.length > 0;
@@ -46,7 +50,7 @@ export const ListContainer: FC<{ filters: FilterConfig }> = ({ filters }) => {
                 {data &&
                     data.total > 0 &&
                     data.documents.map((x) => (
-                        <GrantCard x={x.value} key={x.id} filters={filters} />
+                        <GrantCard x={x.value} key={x.id} filters={filters} categories={categories} />
                     ))}
                 {(!data || data.total == 0) && (
                     <p className="text-neutral-500 text-center p-4">
