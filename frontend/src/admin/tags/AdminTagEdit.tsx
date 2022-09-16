@@ -12,9 +12,11 @@ import { Profile } from '../../components/Profile';
 import { SaveButton } from '../../components/SaveButton';
 
 export const AdminTagEditContainer: FC<{
-    tag: Tag | undefined;
-}> = ({ tag }) => {
-    const tagKey = tag?.key;
+    tag: [string, Tag] | undefined;
+}> = ({ tag: tagFull }) => {
+
+    const [tagKey, tag] = tagFull;
+
     const { register, handleSubmit, watch } = useForm({
         defaultValues: {
             tag_key: tagKey,
@@ -141,7 +143,7 @@ export const AdminTagEditContainer: FC<{
                             {...register('tag_key', { required: true })}
                         />
                         <SaveButton isAdmin={isAdmin} loading={isSigning} />
-                        {isAdmin && tag && tagKey == tag.key && (
+                        {isAdmin && tag && tagKey && (
                             <DeleteButton
                                 loading={isSigning}
                                 onClick={deleteData}
@@ -174,7 +176,7 @@ export const AdminTagEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
                 GLOBALS.API_URL + '/tags/get?query=' + id
             );
 
-            return (await request.json()) as Tag;
+            return [id, await request.json()] as [string, Tag];
         },
         { revalidateOnFocus: true }
     );

@@ -50,7 +50,7 @@ export const getTagRoute = async (request: Request, response: Response) => {
         const search_data = await redis.hGetAll('tags:' + query);
 
         log.debug(search_data);
-        response.send(Object.assign({ key: query }, search_data));
+        response.send(search_data);
 
         return;
     } catch (error) {
