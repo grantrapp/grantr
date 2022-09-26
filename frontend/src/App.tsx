@@ -31,6 +31,8 @@ const wagmiClient = createClient({
     provider,
 });
 
+const maintenance = false;
+
 export const App = () => {
     return (
         <WagmiConfig client={wagmiClient}>
@@ -45,7 +47,7 @@ export const App = () => {
             >
                 <BrowserRouter>
                     <Routes>
-                        {localStorage.getItem('luc-debug') ? (
+                        {!maintenance || localStorage.getItem('luc-debug') ? (
                             <>
                                 <Route path="/" element={<Home />} />
                                 <Route path="/admin" element={<Admin />} />
