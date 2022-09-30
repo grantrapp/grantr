@@ -7,14 +7,14 @@ import { Tag } from '../../../backend/src/tag.type';
 import { FilterConfig } from './Home';
 
 export const GrantCard: FC<{
-    x: GrantProgram;
+    program: GrantProgram;
     filters: FilterConfig;
     categories: Record<string, Tag>;
-}> = ({ x, filters, categories }) => {
+}> = ({ program, filters, categories }) => {
     const tags = useMemo<[string, string][]>(() => {
-        if (!x.tags) return;
+        if (!program.tags) return;
 
-        return (x.tags as unknown as string)
+        return program.tags
             .split(',')
             .sort((a, _) => {
                 return filters.tags.includes(a) ? -1 : 1;
@@ -25,34 +25,34 @@ export const GrantCard: FC<{
                 return [tag, categories[tag]?.name] as [string, string];
             })
             .filter((x) => x);
-    }, [filters, x]);
-
+    }, [filters, program]);
+    
     const grantAmountRange = useMemo(() => {
-        if (x.max_amount && !x.min_amount) return `${x.max_amount}`;
+        if (program.max_amount && !program.min_amount) return `${program.max_amount}`;
 
-        if (x.min_amount && !x.max_amount) return `${x.min_amount}+`;
+        if (program.min_amount && !program.max_amount) return `${program.min_amount}+`;
 
-        if (!x.min_amount && !x.max_amount) return '';
+        if (!program.min_amount && !program.max_amount) return '';
 
-        return `${x.min_amount} - ${x.max_amount}`;
-    }, [x]);
+        return `${program.min_amount} - ${program.max_amount}`;
+    }, [program]);
 
     return (
         <Link
             className="p-2 bg-primary hover:brightness-90 cursor-pointer text-gray-900 focus:outline-2"
-            to={`/grant/${x.id}`}
+            to={`/grant/${program.id}`}
         >
             <div className="cursor-pointer mb-2">
                 <div className="flex gap-2 mb-2">
-                    {x.image_url && (
+                    {program.image_url && (
                         <div className="w-8 h-8 flex justify-center items-center">
                             <img
-                                src={x.image_url}
+                                src={program.image_url}
                                 className="rounded object-fill w-full h-auto"
                             />
                         </div>
                     )}
-                    <span className="font-bold">{x.name}</span>
+                    <span className="font-bold">{program.name}</span>
                 </div>
                 <div className="flex flex-row items-center space-x-2">
                     <div className="flex flex-row items-center">
@@ -70,7 +70,7 @@ export const GrantCard: FC<{
                         </svg>
                         <span className="text-xs ml-0.5">Organization</span>
                     </div>
-                    {(x.min_amount || x.max_amount) && (
+                    {(program.min_amount || program.max_amount) && (
                         <div className="flex flex-row items-center">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@ export const GrantCard: FC<{
                                 />
                             </svg>
                             <span className="text-xs ml-0.5">
-                                {grantAmountRange} {x.currency}
+                                {grantAmountRange} {program.currency}
                             </span>
                         </div>
                     )}

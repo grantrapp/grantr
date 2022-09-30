@@ -51,10 +51,9 @@ export const AdminPostEditContainer: FC<{
     );
     const { chain: activeChain } = useNetwork();
     const {
-        data: signedData,
+        data: _,
         signTypedDataAsync,
         isLoading: isSigning,
-        status,
     } = useSignTypedData();
 
     const description = watch('description');
@@ -87,7 +86,7 @@ export const AdminPostEditContainer: FC<{
         };
 
         // Inser fetch here
-        const steve = await fetch(GLOBALS.API_URL + '/update', {
+        const request = await fetch(GLOBALS.API_URL + '/update', {
             method: 'POST',
             body: JSON.stringify(message_data),
             headers: {
@@ -95,9 +94,9 @@ export const AdminPostEditContainer: FC<{
             },
         });
 
-        console.log(steve);
+        console.log(request);
 
-        if (!steve.ok) {
+        if (!request.ok) {
             alert('Error');
         } else {
             nav(-1);
@@ -131,7 +130,7 @@ export const AdminPostEditContainer: FC<{
         };
 
         // Inser fetch here
-        const steve = await fetch(GLOBALS.API_URL + '/delete', {
+        const request = await fetch(GLOBALS.API_URL + '/delete', {
             method: 'POST',
             body: JSON.stringify(message_data),
             headers: {
@@ -139,9 +138,7 @@ export const AdminPostEditContainer: FC<{
             },
         });
 
-        console.log(steve);
-
-        if (!steve.ok) {
+        if (!request.ok) {
             alert('Error');
         } else {
             nav(-1);
@@ -152,7 +149,7 @@ export const AdminPostEditContainer: FC<{
         <div className="flex flex-col-reverse lg:flex-row gap-8 mt-8">
             <div className="flex-shrink flex-grow">
                 <div className="grant-description my-4">
-                    <ReactMarkdown children={description as string} />
+                    <ReactMarkdown children={description} />
                 </div>
             </div>
             <div className="w-screen max-w-full lg:max-w-xl flex-grow p-4 border">
@@ -260,7 +257,7 @@ export const AdminPostEditContainer: FC<{
 export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { data: grant, error } = useSWR(
+    const { data: grant } = useSWR(
         () => !isNew && `/api/get/${id}`,
         async () => {
             const request = await fetch(GLOBALS.API_URL + '/get?query=' + id);
@@ -269,8 +266,6 @@ export const AdminPostEdit: FC<{ isNew?: boolean }> = ({ isNew = false }) => {
         },
         { revalidateOnFocus: true }
     );
-
-    console.log(grant);
 
     return (
         <div className="max-w-screen w-full flex mx-auto px-4 py-12">

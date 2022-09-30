@@ -31,21 +31,6 @@ export const SearchContainer: FC<{
                     </button>
                 </div>
                 <div className="p-4 flex flex-col items-start bg-primary grow-0">
-                    {/*                         <h1 className="font-bold">Ecosystem</h1>
-                        <div className="flex flex-col space-y-0.5">
-                            {categories.map((category, index) => (
-                                <div className="flex flex-row items-center space-x-1">
-                                    <div
-                                        className={`w-3 h-3 border-4 border-dark ${
-                                            index % 2 ? 'bg-primary' : 'bg-dark'
-                                        }`}
-                                    ></div>
-                                    <span className="tracking-wider">
-                                        {category}
-                                    </span>
-                                </div>
-                            ))}
-                        </div> */}
                     <h1 className="font-bold">For</h1>
                     <div className="flex flex-col space-y-0.5">
                         {Object.keys(categories).map((key) => (
@@ -132,8 +117,8 @@ export const Inner: FC<{ categories: Record<string, Tag> }> = ({
 };
 
 export const Home: FC = () => {
-    const { data, error } = useSWR('/api/tags', async () => {
-        const request = await fetch(GLOBALS.API_URL + '/tags/list');
+    const { data } = useSWR('/api/tags', async () => {
+        const request = await fetch(GLOBALS.API_URL + '/tags');
 
         return (await request.json()) as Record<string, Tag>;
     });

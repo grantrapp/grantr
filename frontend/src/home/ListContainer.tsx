@@ -49,8 +49,8 @@ export const ListContainer: FC<{
             <div className="flex flex-col space-y-4">
                 {data &&
                     data.total > 0 &&
-                    data.documents.map((x) => (
-                        <GrantCard x={x.value} key={x.id} filters={filters} categories={categories} />
+                    data.documents.map((document) => (
+                        <GrantCard program={document.value} key={document.id} filters={filters} categories={categories} />
                     ))}
                 {(!data || data.total == 0) && (
                     <p className="text-neutral-500 text-center p-4">
