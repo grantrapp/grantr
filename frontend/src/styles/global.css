@@ -3,7 +3,7 @@
 }
 
 html {
-  @apply bg-dark selection:bg-primary selection:text-gray-900;
+  @apply bg-dark text-gray-900 selection:bg-primary selection:text-gray-900;
 }
 
 .grant-description {
