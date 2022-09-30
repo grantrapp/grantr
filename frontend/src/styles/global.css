@@ -1,3 +1,7 @@
+:root {
+  color-scheme: dark;
+}
+
 html {
   @apply bg-dark selection:bg-primary selection:text-gray-900;
 }
