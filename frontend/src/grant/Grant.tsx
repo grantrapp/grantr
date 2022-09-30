@@ -12,7 +12,7 @@ import { GrantLinks } from '../components/GrantLinks';
 export const Grant = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const { data: grant, error } = useSWR(
+    const { data: grant } = useSWR(
         `/api/get/${id}`,
         async () => {
             const request = await fetch(GLOBALS.API_URL + `/get?query=${id}`);
