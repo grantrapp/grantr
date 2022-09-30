@@ -2,14 +2,6 @@ import { Request, Response } from 'express';
 
 import { redis } from '../..';
 
-// const HARDCODED_precompute: string[] = [];
-
-// const HARDCODED_list = Object.assign(
-//     {},
-//     ...HARDCODED_precompute.map((value) => ({
-//         [value.toLowerCase().replace(/[^'a-z]/g, '')]: value,
-//     }))
-// );
 
 const tagList: Record<string, Record<string, string>> = {};
 
