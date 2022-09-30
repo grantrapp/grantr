@@ -16,7 +16,8 @@ import { allRoute } from './routes/all';
 import { deleteRoute } from './routes/delete';
 import { getRoute } from './routes/get';
 import { searchRoute } from './routes/search';
-import { tagListRoute } from './routes/taglist';
+import { tagsRouter } from './routes/tags';
+import { fetchTags } from './routes/tags/list';
 import { updateRoute } from './routes/update';
 
 type GrantKeys = keyof GrantProgram;
@@ -110,10 +111,12 @@ export const redis = createClient({
 
     server.get('/search', searchRoute);
     server.get('/all', allRoute);
-    server.get('/tags', tagListRoute);
+    server.use('/tags', tagsRouter);
     server.post('/update', updateRoute);
     server.get('/get', getRoute);
     server.post('/delete', deleteRoute);
+
+    fetchTags();
 
     log.express('Listening to port 3000');
 
