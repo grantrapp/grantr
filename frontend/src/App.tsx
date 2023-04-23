@@ -17,7 +17,7 @@ import { WIP } from './WIP';
 import { AdminTagEdit } from './admin/tags/AdminTagEdit';
 import { Tags } from './admin/tags/Tags';
 import { Down } from './Down';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const { chains, provider } = configureChains(
     [chain.mainnet],
@@ -49,7 +49,7 @@ export const App = (API_URL: string) => {
                     setUnexpectedDown(true);
                 }
             } catch (error) {
-                // Handle fetch errors
+                console.error("Couldn't fetch maintenance status: "+ error)
             }
         };
 
