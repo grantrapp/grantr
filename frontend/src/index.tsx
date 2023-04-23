@@ -14,7 +14,7 @@ export const GLOBALS = {
 };
 
 // @ts-ignore
-createRoot(document.querySelector('#root')).render(<App />);
+createRoot(document.querySelector('#root')).render(<App apiURL={GLOBALS.API_URL} />);
 
 const match = 'pleaseopen';
 let last_key = '';

@@ -16,6 +16,8 @@ import { publicProvider } from 'wagmi/providers/public';
 import { WIP } from './WIP';
 import { AdminTagEdit } from './admin/tags/AdminTagEdit';
 import { Tags } from './admin/tags/Tags';
+import { Down } from './Down';
+import { useEffect, useState } from 'react';
 
 const { chains, provider } = configureChains(
     [chain.mainnet],
@@ -33,9 +35,26 @@ const wagmiClient = createClient({
     provider,
 });
 
-const maintenance = false;
 
-export const App = () => {
+export const App = (API_URL: string) => {
+    let [maintenance, setMaintenance] = useState(false);
+    let [unexpectedDown, setUnexpectedDown] = useState(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await fetch("https://httpstat.us/200");
+                if (res.status === 503) {
+                    setMaintenance(true);
+                } else if (res.status !== 200) {
+                    setUnexpectedDown(true);
+                }
+            } catch (error) {
+                // Handle fetch errors
+            }
+        };
+
+        fetchData();
+    }, []);
     return (
         <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider
@@ -49,31 +68,47 @@ export const App = () => {
             >
                 <BrowserRouter>
                     <Routes>
-                        {!maintenance || localStorage.getItem('luc-debug') ? (
-                            <>
-                                <Route path="/" element={<Home />} />
-                                <Route path="/admin" element={<Admin />} />
-                                <Route
-                                    path="/admin/new"
-                                    element={<AdminPostEdit isNew />}
-                                />
-                                <Route
-                                    path="/admin/:id/edit"
-                                    element={<AdminPostEdit />}
-                                />
-                                <Route path="/admin/tags" element={<Tags />} />
-                                <Route
-                                    path="/admin/tags/new"
-                                    element={<AdminTagEdit isNew />}
-                                />
-                                <Route
-                                    path="/admin/tags/:id/edit"
-                                    element={<AdminTagEdit />}
-                                />
-                                <Route path="/grant/:id" element={<Grant />} />
-                            </>
+                        {unexpectedDown ? (
+                            <Route path="/" element={<Down />} />
                         ) : (
-                            <Route path="/" element={<WIP />} />
+                            <>
+                                {!maintenance ||
+                                localStorage.getItem('luc-debug') ? (
+                                    <>
+                                        <Route path="/" element={<Home />} />
+                                        <Route
+                                            path="/admin"
+                                            element={<Admin />}
+                                        />
+                                        <Route
+                                            path="/admin/new"
+                                            element={<AdminPostEdit isNew />}
+                                        />
+                                        <Route
+                                            path="/admin/:id/edit"
+                                            element={<AdminPostEdit />}
+                                        />
+                                        <Route
+                                            path="/admin/tags"
+                                            element={<Tags />}
+                                        />
+                                        <Route
+                                            path="/admin/tags/new"
+                                            element={<AdminTagEdit isNew />}
+                                        />
+                                        <Route
+                                            path="/admin/tags/:id/edit"
+                                            element={<AdminTagEdit />}
+                                        />
+                                        <Route
+                                            path="/grant/:id"
+                                            element={<Grant />}
+                                        />
+                                    </>
+                                ) : (
+                                    <Route path="/" element={<WIP />} />
+                                )}
+                            </>
                         )}
                     </Routes>
                 </BrowserRouter>
