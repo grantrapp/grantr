@@ -17,7 +17,7 @@ import { WIP } from './WIP';
 import { AdminTagEdit } from './admin/tags/AdminTagEdit';
 import { Tags } from './admin/tags/Tags';
 import { Down } from './Down';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const { chains, provider } = configureChains(
     [chain.mainnet],
