@@ -42,7 +42,7 @@ export const App = (API_URL: string) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch("https://httpstat.us/200");
+                const res = await fetch(API_URL);
                 if (res.status === 503) {
                     setMaintenance(true);
                 } else if (res.status !== 200) {
