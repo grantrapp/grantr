@@ -4,6 +4,7 @@ import { Admin } from './admin/Admin';
 import { AdminPostEdit } from './admin/AdminPostEdit';
 import { Grant } from './grant/Grant';
 import { Home } from './home/Home';
+import { GLOBALS } from './index'
 
 import {
     darkTheme,
@@ -36,20 +37,22 @@ const wagmiClient = createClient({
 });
 
 
-export const App = (API_URL: string) => {
+export const App = () => {
     let [maintenance, setMaintenance] = useState(false);
     let [unexpectedDown, setUnexpectedDown] = useState(false);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch(API_URL);
+                const res = await fetch(GLOBALS.API_URL);
+
                 if (res.status === 503) {
                     setMaintenance(true);
                 } else if (res.status !== 200) {
                     setUnexpectedDown(true);
                 }
             } catch (error) {
-                console.error("Couldn't fetch maintenance status: "+ error)
+                console.error("Couldn't fetch maintenance status: " + error)
             }
         };
 

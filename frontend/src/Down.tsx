@@ -14,7 +14,6 @@ export const Down = () => {
     return (
         <div className="lcontainer">
             <div className="w-full flex flex-col items-center">
-                {/* <div className="grid grid-cols-12 gap-4"> */}
                 <div className="col-span-12 lg:col-span-4 p-2 flex flex-col items-center grow-0">
                     <h1 className="text-4xl font-bold text-primary">
                         GRANTR
