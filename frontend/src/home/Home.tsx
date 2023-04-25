@@ -119,6 +119,7 @@ export const Inner: FC<{ categories: Record<string, Tag> }> = ({
 export const Home: FC = () => {
     const { data } = useSWR('/api/tags', async () => {
         const request = await fetch(GLOBALS.API_URL + '/tags/list');
+
         return (await request.json()) as Record<string, Tag>;
     });
 
