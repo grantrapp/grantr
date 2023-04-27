@@ -2,14 +2,14 @@ import { TwitterButton } from './components/TwitterButton';
 import { GLOBALS } from './index';
 
 export const Down = () => {
-    // Every 30 seconds, pull the API and see if it's back up
+    // Every 30 seconds, pull the API and see if it's back up.
     setInterval(() => {
-        fetch(GLOBALS.API_URL).then((res) => {
-            if (res.status == 200) {
+        fetch(GLOBALS.API_URL).then((result) => {
+            if (result.status == 200) {
                 location.reload();
             }
         });
-    }, 30000);
+    }, 30_000);
 
     return (
         <div className="lcontainer">

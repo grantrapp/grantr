@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
-// import '@rainbow-me/rainbowkit/styles.css';
 
+// import '@rainbow-me/rainbowkit/styles.css';
 import { App } from './App';
 
 export const GLOBALS = {
@@ -18,6 +18,7 @@ createRoot(document.querySelector('#root')).render(<App />);
 
 const match = 'pleaseopen';
 let last_key = '';
+
 if (!localStorage.getItem('luc-debug')) {
     document.addEventListener('keydown', (event) => {
         if (match.startsWith(last_key + event.key)) {
