@@ -10,6 +10,6 @@
         "browser": true
     },
     "rules": {
-        "unicorn/prefer-query-selector": false
+        "unicorn/prefer-query-selector": 0
     }
 }
