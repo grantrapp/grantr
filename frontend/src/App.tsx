@@ -17,6 +17,7 @@ import { Grant } from './grant/Grant';
 import { Home } from './home/Home';
 import { GLOBALS } from './index';
 import { WIP } from './WIP';
+import { PageNotFound } from './PageNotFound';
 
 const { chains, provider } = configureChains(
     [chain.mainnet],
@@ -113,6 +114,8 @@ export const App = () => {
                                 )}
                             </>
                         )}
+
+                        <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </BrowserRouter>
             </RainbowKitProvider>
